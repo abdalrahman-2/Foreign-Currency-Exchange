@@ -1,4 +1,3 @@
-import logo from '../assets/images/logo.svg';
 import styled from 'styled-components';
 
 const StyledImage = styled.img`
@@ -13,5 +12,7 @@ const StyledImage = styled.img`
 `;
 
 export default function Logo() {
-  return <StyledImage src={logo} alt="FX Checker logo" />;
+  return (
+    <StyledImage src="../../assets/images/logo.svg" alt="FX Checker logo" />
+  );
 }

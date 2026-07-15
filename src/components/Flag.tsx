@@ -1,0 +1,21 @@
+import styled from 'styled-components';
+
+type props = {
+  countryName: string;
+  size: 'normal' | 'small';
+};
+
+const StyledFlag = styled.img<{ size: string }>`
+  width: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
+  height: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
+`;
+
+export default function Logo({ countryName, size }: props) {
+  return (
+    <StyledFlag
+      size={size}
+      src={`../../assets/images/flags/${countryName}.webp`}
+      alt={`${countryName} flag`}
+    />
+  );
+}

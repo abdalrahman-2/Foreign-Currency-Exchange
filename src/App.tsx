@@ -1,4 +1,4 @@
-import { Logo } from './components';
+import { Flag, Logo } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
     <>
       <GlobalStyles />
       <Logo />
+      <Flag size="small" countryName="eg" />
     </>
   );
 }
