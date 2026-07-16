@@ -8,6 +8,7 @@ type props = {
 const StyledFlag = styled.img<{ size: string }>`
   width: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
   height: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
+  border-radius: var(--radius-full);
 `;
 
 export default function Logo({ countryName, size }: props) {

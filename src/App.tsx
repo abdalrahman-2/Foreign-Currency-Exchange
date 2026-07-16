@@ -1,13 +1,14 @@
-import { Flag, Logo } from './components';
+import { Flag, Logo, CurrencyButton } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
   return (
     <>
       <GlobalStyles />
+      <h1>showing components</h1>
       <Logo />
-      <h1 className="text-4xl bg-red-600">tryccc</h1>
       <Flag size="small" countryName="eg" />
+      <CurrencyButton countryName="sa" currency="SRY" />
     </>
   );
 }
