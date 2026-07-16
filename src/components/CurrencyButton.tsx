@@ -35,11 +35,27 @@ const StyledCurrencyButton = styled.button<{ type: string }>`
 `;
 
 export default function CurrencyButton({ countryName, currency, type }: props) {
+  const buttonLabel =
+    type === 'send'
+      ? `Selected send currency: ${currency}. Open send currency options`
+      : `Selected receive currency: ${currency}. Open receive currency options`;
+
   return (
     <StyledCurrencyButton type={type}>
-      <Flag size="small" countryName={countryName} />
+      <Flag
+        size="small"
+        countryName={countryName}
+        alt={
+          type === 'send'
+            ? `${currency} flag for the send currency selector`
+            : `${currency} flag for the receive currency selector`
+        }
+      />
       <p>{currency}</p>
-      <img src="../../assets/images/icon-chevron-down.svg" alt="down arrow" />
+      <img
+        src="../../assets/images/icon-chevron-down.svg"
+        alt={buttonLabel}
+      />
     </StyledCurrencyButton>
   );
 }

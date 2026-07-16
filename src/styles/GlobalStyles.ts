@@ -22,6 +22,7 @@ const GlobalStyles = createGlobalStyle`
 
     /* ========= Lime ========= */
     --lime-500: #D3FC47;
+    --lime-650:#a4bd50;
     --lime-800: #283300;
 
     /* ========= Green ========= */

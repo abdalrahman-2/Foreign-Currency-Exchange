@@ -44,12 +44,12 @@ export default function SwapButton() {
       <img
         className="big-screen"
         src="../../assets/images/icon-exchange.svg"
-        alt="swap button"
+        alt="Swap the send and receive currencies"
       />
       <img
         className="small-screen"
         src="../../assets/images/icon-exchange-vertical.svg"
-        alt="swap button"
+        alt="Swap the send and receive currencies"
       />
     </StyledButton>
   );

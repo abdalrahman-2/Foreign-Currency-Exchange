@@ -42,12 +42,12 @@ export default function DeleteButton() {
       <img
         className="icon-default"
         src="../../assets/images/icon-delete.svg"
-        alt="delete button"
+        alt="Delete this item"
       />
       <img
         className="icon-hover"
         src="../../assets/images/icon-delete-filled.svg"
-        alt="delete button"
+        alt="Delete this item"
       />
     </StyledButton>
   );

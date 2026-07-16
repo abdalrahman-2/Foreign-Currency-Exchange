@@ -5,6 +5,7 @@ import {
   SwapButton,
   DeleteButton,
   LogButton,
+  FavoritButton,
 } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
@@ -18,7 +19,8 @@ function App() {
       <CurrencyButton type="recieve" countryName="sa" currency="SRY" />
       <SwapButton />
       <DeleteButton />
-      <LogButton className="text-preset-5-medium" state="empty" />
+      <LogButton className="text-preset-5-medium" state="filled" />
+      <FavoritButton state="favorited" />
     </>
   );
 }

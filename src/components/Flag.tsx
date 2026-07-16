@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type props = {
   countryName: string;
   size: 'normal' | 'small';
+  alt?: string;
 };
 
 const StyledFlag = styled.img<{ size: string }>`
@@ -11,12 +12,12 @@ const StyledFlag = styled.img<{ size: string }>`
   border-radius: var(--radius-full);
 `;
 
-export default function Logo({ countryName, size }: props) {
+export default function Logo({ countryName, size, alt }: props) {
   return (
     <StyledFlag
       size={size}
       src={`../../assets/images/flags/${countryName}.webp`}
-      alt={`${countryName} flag`}
+      alt={alt ?? `${countryName} flag`}
     />
   );
 }
