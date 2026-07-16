@@ -4,6 +4,7 @@ const StyledButton = styled.button`
   background-color: var(--neutral-600);
   width: calc(48 / 16 * 1rem);
   height: calc(48 / 16 * 1rem);
+  border: var(--neutral-500) solid 1px;
   border-radius: 0.5rem;
   cursor: pointer;
   display: flex;
@@ -27,12 +28,13 @@ const StyledButton = styled.button`
   &:focus {
     outline: none;
     box-shadow:
-      0 0 0 3px var(--lime-800),
-      0 0 0 5px var(--lime-500);
+      0 0 0 1px var(--lime-800),
+      0 0 0 2px var(--lime-500);
   }
 
   &:hover {
     background-color: var(--neutral-500);
+    border: var(--neutral-400) solid 1px;
   }
 `;
 
