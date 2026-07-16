@@ -6,6 +6,7 @@ function App() {
     <>
       <GlobalStyles />
       <Logo />
+      <h1 className="text-4xl bg-red-600">tryccc</h1>
       <Flag size="small" countryName="eg" />
     </>
   );
