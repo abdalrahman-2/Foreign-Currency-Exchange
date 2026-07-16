@@ -19,7 +19,7 @@ function App() {
       <CurrencyButton type="recieve" countryName="sa" currency="SRY" />
       <SwapButton />
       <DeleteButton />
-      <LogButton className="text-preset-5-medium" state="filled" />
+      <LogButton state="filled" />
       <FavoritButton state="favorited" />
     </>
   );

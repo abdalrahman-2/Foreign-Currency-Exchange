@@ -2,7 +2,7 @@ import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type props = {
-  state: 'filled' | 'empty' | 'favorited';
+  state: 'empty' | 'filled' | 'favorited';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const StyledButton = styled.button<{ state: string }>`
@@ -37,6 +37,9 @@ const StyledButton = styled.button<{ state: string }>`
       : state === 'filled'
         ? 'var(--neutral-50)'
         : 'var(--neutral-900)'};
+
+  //defining the cursor based on the state if it favorited or filled or empty
+  cursor: ${({ state }) => (state !== 'empty' ? 'pointer' : '')};
 
   //defining the hover state for filled and favorited
   &:hover {

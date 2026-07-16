@@ -1,63 +1,69 @@
 import type { ButtonHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 type props = {
-  state: 'filled' | 'empty' | 'logged';
+  state: 'empty' | 'filled' | 'logged';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const commonStyles = css`
+const StyledButton = styled.button<{ state: string }>`
+  // common styles
   width: calc(132 / 16 * 1rem);
   height: calc(32 / 16 * 1rem);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-8);
-`;
 
-const EmptyStyledButton = styled.button`
-  ${commonStyles}
-  border: 1px solid var(--neutral-300);
-  color: var(--neutral-200);
-  text-transform: uppercase;
-`;
+  //defining the background-color based on the state if it logged or filled or empty
+  background-color: ${({ state }) =>
+    state === 'empty' || state === 'filled' ? '' : 'var(--lime-500)'};
 
-const FilledStyledButton = styled.button`
-  ${commonStyles}
-  border: 1px solid var(--lime-500);
-  color: var(--neutral-50);
-  cursor: pointer;
-  text-transform: uppercase;
+  //defining the color based on the state if it logged or filled or empty
+  color: ${({ state }) =>
+    state === 'empty'
+      ? 'var(--neutral-200)'
+      : state === 'filled'
+        ? 'var(--neutral-50)'
+        : 'var(--neutral-900)'};
+
+  //defining the text transform based on the state if it logged or filled or empty
+  text-transform: ${({ state }) =>
+    state === 'empty' || state === 'filled' ? 'uppercase' : 'capitalize'};
+
+  //defining the cursor based on the state if it logged or filled or empty
+  cursor: ${({ state }) => (state !== 'empty' ? 'pointer' : '')};
+
+  //defining the border based on the state if it logged or filled or empty
+  border: ${({ state }) =>
+    state === 'logged' || state === 'filled'
+      ? '1px solid var(--lime-500)'
+      : '1px solid var(--neutral-300)'};
 
   &:hover {
-    background-color: var(--lime-800);
+    background-color: ${({ state }) => state === 'filled' && 'var(--lime-800)'};
   }
 
   &:focus {
-    outline: 1px solid var(--lime-500);
-    outline-offset: 3px;
+    outline: ${({ state }) =>
+      state === 'filled' && '1px solid var(--lime-500)'};
+    outline-offset: ${({ state }) => state === 'filled' && '3px'};
   }
 `;
 
-const LoggedStyledButton = styled.button`
-  ${commonStyles}
-  background-color: var(--lime-500);
-  color: var(--neutral-900);
-`;
-
-export default function LogButton({ state, className }: props) {
-  return state === 'empty' ? (
-    <EmptyStyledButton className={className}>Log conversion</EmptyStyledButton>
-  ) : state === 'filled' ? (
-    <FilledStyledButton className={className}>
-      Log conversion
-    </FilledStyledButton>
-  ) : (
-    <LoggedStyledButton className={className}>
-      <img
-        src="../../assets/images/icon-check-black.png"
-        className="w-[1rem] h-[1rem]"
-      />
-      <p className="ml-2">Logged</p>
-    </LoggedStyledButton>
+export default function LogButton({ state }: props) {
+  return (
+    <StyledButton state={state} className="text-preset-5-medium">
+      {state === 'logged' ? (
+        <>
+          <img
+            src="../../assets/images/icon-check-black.png"
+            className="w-[1rem] h-[1rem]"
+          />
+          <p className="ml-2">Logged</p>
+        </>
+      ) : (
+        'Log conversion'
+      )}
+    </StyledButton>
   );
 }
