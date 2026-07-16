@@ -21,9 +21,16 @@ const StyledCurrencyButton = styled.button<{ type: string }>`
   height: calc(40 / 16 * 1rem);
   cursor: pointer;
 
+  &:focus {
+    outline: none;
+    box-shadow:
+      0 0 0 3px var(--lime-800),
+      0 0 0 5px var(--lime-500);
+  }
+
   &:hover {
     background-color: ${({ type }) =>
-      type === 'send' ? 'var(--neutral-400)' : 'var(--neutral-300)'};
+      type === 'send' ? 'var(--neutral-400)' : ''};
   }
 `;
 

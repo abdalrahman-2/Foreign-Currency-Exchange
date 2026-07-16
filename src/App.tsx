@@ -1,4 +1,4 @@
-import { Flag, Logo, CurrencyButton } from './components';
+import { Flag, Logo, CurrencyButton, SwapButton } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
@@ -8,7 +8,8 @@ function App() {
       <h1>showing components</h1>
       <Logo />
       <Flag size="small" countryName="eg" />
-      <CurrencyButton countryName="sa" currency="SRY" />
+      <CurrencyButton type="recieve" countryName="sa" currency="SRY" />
+      <SwapButton />
     </>
   );
 }
