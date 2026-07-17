@@ -7,12 +7,11 @@ type props = {
 
 const StyledButton = styled.button<{ state: string }>`
   // common styles
-  height: calc(32 / 16 * 1rem);
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-8);
-  text-transform: uppercase;
 
   //defining the width based on the state if it favorited or filled or empty
   width: ${({ state }) =>
@@ -41,7 +40,7 @@ const StyledButton = styled.button<{ state: string }>`
   //defining the cursor based on the state if it favorited or filled or empty
   cursor: ${({ state }) => (state !== 'empty' ? 'pointer' : '')};
 
-  //defining the hover state for filled and favorited
+  //defining the hover state if it filled and favorited
   &:hover {
     background-color: ${({ state }) =>
       state === 'filled' ? 'var(--neutral-500)' : 'var(--lime-650)'};
