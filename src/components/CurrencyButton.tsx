@@ -7,7 +7,7 @@ type props = {
   type: 'send' | 'recieve';
 };
 
-const StyledCurrencyButton = styled.button<{ type: string }>`
+const StyledCurrencyButton = styled.button<{ type: props['type'] }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,10 +52,7 @@ export default function CurrencyButton({ countryName, currency, type }: props) {
         }
       />
       <p>{currency}</p>
-      <img
-        src="../../assets/images/icon-chevron-down.svg"
-        alt={buttonLabel}
-      />
+      <img src="../../assets/images/icon-chevron-down.svg" alt={buttonLabel} />
     </StyledCurrencyButton>
   );
 }

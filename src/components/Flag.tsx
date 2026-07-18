@@ -6,7 +6,7 @@ type props = {
   alt?: string;
 };
 
-const StyledFlag = styled.img<{ size: string }>`
+const StyledFlag = styled.img<{ size: props['size'] }>`
   width: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
   height: ${({ size }) => (size === 'normal' ? 24 / 16 : 20 / 16)}rem;
   border-radius: var(--radius-full);

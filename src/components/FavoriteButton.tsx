@@ -5,7 +5,7 @@ type props = {
   state: 'empty' | 'filled' | 'favorited';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const StyledButton = styled.button<{ state: string }>`
+const StyledButton = styled.button<{ state: props['state'] }>`
   // common styles
   height: 2rem;
   display: flex;

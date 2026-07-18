@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledWrapper = styled.label`
   width: calc(360 / 16 * 1rem);
   height: calc(46 / 16 * 1rem);
-  display: flex;
+  display: inline-flex;
   gap: var(--spacing-125);
   padding: var(--spacing-150);
   border: 1px solid var(--neutral-200);

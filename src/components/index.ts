@@ -9,3 +9,4 @@ export { default as SmallFavoritButton } from './SmallFavoriteButton';
 export { default as ClearButton } from './ClearButton';
 export { default as TabButton } from './TabButton';
 export { default as SearchInput } from './SearchInput';
+export { default as AmmountInput } from './AmmountInput';
