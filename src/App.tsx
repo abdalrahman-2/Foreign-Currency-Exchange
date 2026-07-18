@@ -8,6 +8,7 @@ import {
   FavoritButton,
   SmallFavoritButton,
   ClearButton,
+  TabButton,
 } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
@@ -25,6 +26,7 @@ function App() {
       <FavoritButton state="favorited" />
       <SmallFavoritButton state="favorited" />
       <ClearButton />
+      <TabButton content="history" />
     </>
   );
 }
