@@ -5,7 +5,7 @@ const StyledImage = styled.img`
   height: calc(26 / 16 * 1rem);
 
   // Mobile
-  @media (max-width: 375px) {
+  @media (max-width: 23.4375em) {
     width: calc(107.15 / 16 * 1rem);
     height: calc(20 / 16 * 1rem);
   }

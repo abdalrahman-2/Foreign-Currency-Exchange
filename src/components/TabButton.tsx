@@ -7,9 +7,7 @@ type Props = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const StyledButton = styled.button<{ state: Props['state'] }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: calc(42 / 16 * 1rem);
   padding-left: var(--spacing-150);
   padding-right: var(--spacing-150);
   border-bottom: 2px solid

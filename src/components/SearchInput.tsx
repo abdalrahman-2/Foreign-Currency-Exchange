@@ -1,14 +1,10 @@
-import type { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
-
-type Props = InputHTMLAttributes<HTMLInputElement>;
 
 const StyledWrapper = styled.label`
   width: calc(360 / 16 * 1rem);
   height: calc(46 / 16 * 1rem);
   display: flex;
-  align-items: center;
-  gap: var(--spacing-100);
+  gap: var(--spacing-125);
   padding: var(--spacing-150);
   border: 1px solid var(--neutral-200);
   border-radius: var(--radius-6);
@@ -23,17 +19,9 @@ const StyledWrapper = styled.label`
   }
 `;
 
-const SearchIcon = styled.img`
-  width: calc(20 / 16 * 1rem);
-  height: calc(20 / 16 * 1rem);
-  flex-shrink: 0;
-`;
-
 const StyledInput = styled.input`
   width: 100%;
-  border: none;
   outline: none;
-  background: none;
   color: var(--neutral-50);
 
   &::placeholder {
@@ -46,23 +34,15 @@ const StyledInput = styled.input`
   }
 `;
 
-export default function SearchInput({
-  className,
-  placeholder = 'Search currencies...',
-  ...props
-}: Props) {
+export default function SearchInput() {
   return (
     <StyledWrapper>
-      <SearchIcon
-        src="../../assets/images/icon-search.svg"
-        alt="Search currencies"
-      />
+      <img src="../../assets/images/icon-search.svg" alt="Search currencies" />
       <StyledInput
         type="text"
-        className={className ?? 'text-preset-5'}
-        placeholder={placeholder}
+        className="text-preset-5"
+        placeholder="Search currencies..."
         aria-label="Search currencies"
-        {...props}
       />
     </StyledWrapper>
   );

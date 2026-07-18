@@ -9,6 +9,7 @@ import {
   SmallFavoritButton,
   ClearButton,
   TabButton,
+  SearchInput,
 } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
@@ -27,6 +28,7 @@ function App() {
       <SmallFavoritButton state="favorited" />
       <ClearButton />
       <TabButton content="history" />
+      <SearchInput />
     </>
   );
 }
