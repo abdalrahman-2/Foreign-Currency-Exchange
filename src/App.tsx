@@ -7,6 +7,7 @@ import {
   LogButton,
   FavoritButton,
   SmallFavoritButton,
+  ClearButton,
 } from './components';
 import GlobalStyles from './styles/GlobalStyles';
 
@@ -23,6 +24,7 @@ function App() {
       <LogButton state="filled" />
       <FavoritButton state="favorited" />
       <SmallFavoritButton state="favorited" />
+      <ClearButton />
     </>
   );
 }

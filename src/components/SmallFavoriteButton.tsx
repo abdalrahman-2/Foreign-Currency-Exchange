@@ -38,7 +38,12 @@ const StyledButton = styled.button<{ state: string }>`
 
 export default function SmallFavoritButton({ state }: props) {
   return (
-    <StyledButton state={state}>
+    <StyledButton
+      state={state}
+      aria-label={
+        state === 'notFavorited' ? 'make it Favorite' : 'remove from favorite'
+      }
+    >
       {state === 'notFavorited' ? (
         <img
           src="../../assets/images/icon-star.svg"

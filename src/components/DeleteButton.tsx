@@ -38,7 +38,7 @@ const StyledButton = styled.button`
 
 export default function DeleteButton() {
   return (
-    <StyledButton>
+    <StyledButton aria-label="delete">
       <img
         className="icon-default"
         src="../../assets/images/icon-delete.svg"

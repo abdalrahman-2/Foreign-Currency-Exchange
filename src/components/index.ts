@@ -6,3 +6,4 @@ export { default as DeleteButton } from './DeleteButton';
 export { default as LogButton } from './LogButton';
 export { default as FavoritButton } from './FavoriteButton';
 export { default as SmallFavoritButton } from './SmallFavoriteButton';
+export { default as ClearButton } from './ClearButton';
