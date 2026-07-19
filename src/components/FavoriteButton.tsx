@@ -1,4 +1,4 @@
-import { useEffect, type ButtonHTMLAttributes } from 'react';
+import { type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type props = {
@@ -59,15 +59,6 @@ const StyledButton = styled.button<{ state: props['state'] }>`
 `;
 
 export default function FavoritButton({ state }: props) {
-  useEffect(() => {
-    async function ticker() {
-      const res = await fetch('https://api.frankfurter.dev/v2/rates?base=USD');
-      const data = await res.json();
-      console.log(data);
-    }
-
-    ticker();
-  }, []);
   return (
     <StyledButton state={state} className="text-preset-5-medium">
       {state === 'empty' || state === 'filled' ? (

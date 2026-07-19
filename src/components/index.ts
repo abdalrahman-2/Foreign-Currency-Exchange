@@ -11,3 +11,4 @@ export { default as TabButton } from './TabButton';
 export { default as SearchInput } from './SearchInput';
 export { default as AmmountInput } from './AmmountInput';
 export { default as Header } from './Header';
+export { default as Loader } from './Loader';
