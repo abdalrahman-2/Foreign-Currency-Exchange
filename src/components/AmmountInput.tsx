@@ -2,7 +2,7 @@ import type { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type props = {
-  type: 'send' | 'recieve';
+  type: 'send' | 'receive';
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const StyledWrapper = styled.label`
@@ -27,12 +27,7 @@ const StyledInput = styled.input<{ $type: props['type'] }>`
   width: 100%;
   outline: none;
   color: ${({ $type }) =>
-    $type === 'recieve' ? 'var(--lime-500)' : 'var(--neutral-50)'};
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.5px;
+    $type === 'receive' ? 'var(--lime-500)' : 'var(--neutral-50)'};
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -54,7 +49,7 @@ const StyledInput = styled.input<{ $type: props['type'] }>`
     letter-spacing: -0.5px;
   }
 
-  @media (max-width: 765px) {
+  @media (max-width: 48.125em) {
     font-size: 2rem;
 
     &::placeholder {
@@ -73,6 +68,7 @@ export default function AmmountInput({ type }: props) {
         aria-label={
           type === 'send' ? 'Send amount input' : 'Receive amount input'
         }
+        className="text-preset-1"
       />
     </StyledWrapper>
   );

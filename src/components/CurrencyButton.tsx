@@ -4,7 +4,7 @@ import { Flag } from '.';
 type props = {
   countryName: string;
   currency: string;
-  type: 'send' | 'recieve';
+  type: 'send' | 'receive';
 };
 
 const StyledCurrencyButton = styled.button<{ type: props['type'] }>`
@@ -35,13 +35,13 @@ const StyledCurrencyButton = styled.button<{ type: props['type'] }>`
 `;
 
 export default function CurrencyButton({ countryName, currency, type }: props) {
-  const buttonLabel =
+  const alt =
     type === 'send'
       ? `Selected send currency: ${currency}. Open send currency options`
       : `Selected receive currency: ${currency}. Open receive currency options`;
 
   return (
-    <StyledCurrencyButton type={type}>
+    <StyledCurrencyButton type={type} aria-label="currency picker">
       <Flag
         size="small"
         countryName={countryName}
@@ -52,7 +52,7 @@ export default function CurrencyButton({ countryName, currency, type }: props) {
         }
       />
       <p>{currency}</p>
-      <img src="../../assets/images/icon-chevron-down.svg" alt={buttonLabel} />
+      <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
     </StyledCurrencyButton>
   );
 }

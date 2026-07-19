@@ -43,7 +43,9 @@ const StyledButton = styled.button<{ state: props['state'] }>`
   //defining the hover state if it filled and favorited
   &:hover {
     background-color: ${({ state }) =>
-      state === 'filled' ? 'var(--neutral-500)' : 'var(--lime-650)'};
+      state === 'filled' || state === 'empty'
+        ? 'var(--neutral-500)'
+        : 'var(--lime-650)'};
   }
 
   //defining the focus state for filled and favorited

@@ -14,7 +14,7 @@ const StyledWrapper = styled.label`
     border-color: var(--lime-500);
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 23.4375em) {
     width: calc(295 / 16 * 1rem);
   }
 `;

@@ -1,21 +1,28 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Header } from './components';
 import GlobalStyles from './styles/GlobalStyles';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AppLayout from './pages/AppLayout';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000, //1 min
+      staleTime: 5 * 60 * 1000, //5 min
     },
   },
 });
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <GlobalStyles />
-      <Header />
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <GlobalStyles />
+        <Routes>
+          <Route index element={<AppLayout />} />
+        </Routes>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 

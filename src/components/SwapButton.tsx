@@ -15,7 +15,7 @@ const StyledButton = styled.button`
     display: none;
   }
 
-  @media (max-width: 375px) {
+  @media (max-width: 23.4375em) {
     .big-screen {
       display: none;
     }
