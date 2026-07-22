@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import { Flag } from '.';
+import { CurrencyPicker, Flag, Loader } from '.';
+import usePicker from '../hooks/usePicker';
+import { type Currency } from '../utils/types';
+import { useState } from 'react';
 
 type props = {
-  countryName: string;
-  currency: string;
-  type: 'send' | 'receive';
+  currency_iso: string;
+  $type: 'send' | 'receive';
 };
 
-const StyledCurrencyButton = styled.button<{ type: props['type'] }>`
+const StyledCurrencyButton = styled.button<{ $type: props['$type'] }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,30 +31,54 @@ const StyledCurrencyButton = styled.button<{ type: props['type'] }>`
   }
 
   &:hover {
-    background-color: ${({ type }) =>
-      type === 'send' ? 'var(--neutral-400)' : ''};
+    background-color: ${({ $type }) =>
+      $type === 'send' ? 'var(--neutral-400)' : ''};
   }
 `;
 
-export default function CurrencyButton({ countryName, currency, type }: props) {
+///////////////////////////////////////////////////////////////
+export default function CurrencyButton({ currency_iso, $type }: props) {
+  const { isPending, data: allCurrencies, error } = usePicker();
+  const [showPicker, setShowPicker] = useState<boolean>(false);
+
+  if (isPending) return <Loader />;
+  if (error) console.log(error.message);
+
+  function handleOnClick() {
+    setShowPicker((prevState) => !prevState);
+  }
+
   const alt =
-    type === 'send'
-      ? `Selected send currency: ${currency}. Open send currency options`
-      : `Selected receive currency: ${currency}. Open receive currency options`;
+    $type === 'send'
+      ? `Selected send currency: ${currency_iso}. Open send currency options`
+      : `Selected receive currency: ${currency_iso}. Open receive currency options`;
 
   return (
-    <StyledCurrencyButton type={type} aria-label="currency picker">
-      <Flag
-        size="small"
-        countryName={countryName}
-        alt={
-          type === 'send'
-            ? `${currency} flag for the send currency selector`
-            : `${currency} flag for the receive currency selector`
-        }
-      />
-      <p>{currency}</p>
-      <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
-    </StyledCurrencyButton>
+    <div className="relative">
+      <StyledCurrencyButton
+        type="button"
+        $type={$type}
+        aria-label="currency picker"
+        onClick={handleOnClick}
+      >
+        <Flag
+          size="small"
+          currencyName={
+            allCurrencies.find(
+              (currency: Currency) => currency.iso_code === currency_iso,
+            ).name
+          }
+        />
+        <p>{currency_iso}</p>
+        <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
+      </StyledCurrencyButton>
+      {showPicker && (
+        <CurrencyPicker
+          allCurrencies={allCurrencies}
+          $type={$type}
+          setShowPicker={setShowPicker}
+        />
+      )}
+    </div>
   );
 }

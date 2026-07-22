@@ -18,7 +18,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <GlobalStyles />
         <Routes>
-          <Route index element={<AppLayout />} />
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={null} />
+          </Route>
         </Routes>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

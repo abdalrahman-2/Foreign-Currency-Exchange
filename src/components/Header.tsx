@@ -25,34 +25,6 @@ const StyledDiv = styled.div`
 `;
 
 export default function Header() {
-  // useEffect(() => {
-  //   async function ticker() {
-  //     const res1 = await fetch(
-  //       'https://api.frankfurter.dev/v2/rates?date=2026-07-17&base=USD',
-  //     );
-  //     const yesterday = res1.json();
-
-  //     const res2 = await fetch(
-  //       'https://api.frankfurter.dev/v2/rates?date=2026-07-18&base=USD',
-  //     );
-  //     const today = await res2.json();
-
-  //     console.log(yesterday);
-  //     console.log(today);
-  //   }
-
-  //   ticker();
-
-  //   const today = new Date();
-  //   const yesterday = new Date();
-  //   yesterday.setDate(yesterday.getDate() - 1);
-
-  //   const formattedToday = today.toISOString().split('T')[0];
-  //   const formattedYesterday = yesterday.toISOString().split('T')[0];
-
-  //   console.log(formattedToday);
-  //   console.log(formattedYesterday);
-  // }, []);
   return (
     <header>
       <StyledDiv>

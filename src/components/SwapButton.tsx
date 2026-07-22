@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+type props = {
+  onClick: () => void;
+};
+
 const StyledButton = styled.button`
   background-color: var(--neutral-600);
   width: calc(48 / 16 * 1rem);
@@ -38,9 +42,9 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function SwapButton() {
+export default function SwapButton({ onClick }: props) {
   return (
-    <StyledButton>
+    <StyledButton type="button" onClick={onClick}>
       <img
         className="big-screen"
         src="../../assets/images/icon-exchange.svg"

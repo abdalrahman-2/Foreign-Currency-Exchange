@@ -5,7 +5,7 @@ type props = {
   state: 'empty' | 'filled' | 'favorited';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const StyledButton = styled.button<{ state: props['state'] }>`
+const StyledButton = styled.button<{ $state: props['state'] }>`
   // common styles
   height: 2rem;
   display: flex;
@@ -14,55 +14,60 @@ const StyledButton = styled.button<{ state: props['state'] }>`
   border-radius: var(--radius-8);
 
   //defining the width based on the state if it favorited or filled or empty
-  width: ${({ state }) =>
-    state === 'favorited' ? 'calc(117 / 16 * 1rem)' : 'calc(110 / 16 * 1rem)'};
+  width: ${({ $state }) =>
+    $state === 'favorited' ? 'calc(117 / 16 * 1rem)' : 'calc(110 / 16 * 1rem)'};
 
   //defining the background-color based on the state if it favorited or filled or empty
-  background-color: ${({ state }) =>
-    state === 'empty' || state === 'filled'
+  background-color: ${({ $state }) =>
+    $state === 'empty' || $state === 'filled'
       ? 'var(--neutral-600)'
       : 'var(--lime-500)'};
 
   //defining the border based on the state if it favorited or filled or empty
-  border: ${({ state }) =>
-    state === 'empty' || state === 'filled'
+  border: ${({ $state }) =>
+    $state === 'empty' || $state === 'filled'
       ? '1px solid var(--neutral-500)'
       : '1px solid var(--lime-500)'};
 
   //defining the color based on the state if it favorited or filled or empty
-  color: ${({ state }) =>
-    state === 'empty'
+  color: ${({ $state }) =>
+    $state === 'empty'
       ? 'var(--neutral-200)'
-      : state === 'filled'
+      : $state === 'filled'
         ? 'var(--neutral-50)'
         : 'var(--neutral-900)'};
 
   //defining the cursor based on the state if it favorited or filled or empty
-  cursor: ${({ state }) => (state !== 'empty' ? 'pointer' : '')};
+  cursor: ${({ $state }) => ($state !== 'empty' ? 'pointer' : '')};
 
   //defining the hover state if it filled and favorited
   &:hover {
-    background-color: ${({ state }) =>
-      state === 'filled' || state === 'empty'
+    background-color: ${({ $state }) =>
+      $state === 'filled' || $state === 'empty'
         ? 'var(--neutral-500)'
         : 'var(--lime-650)'};
   }
 
   //defining the focus state for filled and favorited
   &:focus {
-    outline: ${({ state }) =>
-      state === 'filled' || state === 'favorited'
+    outline: ${({ $state }) =>
+      $state === 'filled' || $state === 'favorited'
         ? '1px solid var(--lime-500)'
         : ''};
 
-    outline-offset: ${({ state }) =>
-      state === 'filled' || state === 'favorited' ? '3px' : ''};
+    outline-offset: ${({ $state }) =>
+      $state === 'filled' || $state === 'favorited' ? '3px' : ''};
   }
 `;
 
-export default function FavoritButton({ state }: props) {
+export default function FavoritButton({ state, ...buttonProps }: props) {
   return (
-    <StyledButton state={state} className="text-preset-5-medium">
+    <StyledButton
+      $state={state}
+      type="button"
+      className="text-preset-5-medium"
+      {...buttonProps}
+    >
       {state === 'empty' || state === 'filled' ? (
         <img
           src="../../assets/images/icon-star.svg"

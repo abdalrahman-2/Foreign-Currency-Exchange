@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import useTicker from '../hooks/useTicker';
 import Loader from './Loader';
+import { useSearchParams } from 'react-router-dom';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -62,7 +63,7 @@ const StyledUl = styled.ul`
   }
 `;
 
-const StyledRate = styled.li<{ situation: 'up' | 'down' }>`
+const StyledRate = styled.li<{ $situation: 'up' | 'down' }>`
   display: flex;
   align-items: center;
   padding: var(--spacing-150) var(--spacing-125);
@@ -79,7 +80,7 @@ const StyledRate = styled.li<{ situation: 'up' | 'down' }>`
 
   & p:nth-child(3) {
     color: ${(props) =>
-      props.situation === 'up' ? 'var(--green-500)' : 'var(--red-500)'};
+      props.$situation === 'up' ? 'var(--green-500)' : 'var(--red-500)'};
   }
 
   & p:nth-child(1),
@@ -94,7 +95,11 @@ const StyledRate = styled.li<{ situation: 'up' | 'down' }>`
 `;
 
 export default function Ticker() {
-  const { isPending, data, error } = useTicker();
+  const [searchParams] = useSearchParams();
+  // default base is USD
+  const base = searchParams.get('base') || 'USD';
+
+  const { isPending, data, error } = useTicker(base);
 
   if (isPending)
     return (
@@ -110,14 +115,11 @@ export default function Ticker() {
     const percentage =
       ((item.rate - yesterday[idx].rate) / yesterday[idx].rate) * 100;
     return {
-      baseToQuote: `USD/${item.quote}`,
+      baseToQuote: `${base}/${item.quote}`,
       rate: item.rate.toFixed(4),
       percentage: `${percentage.toFixed(2)}%`,
     };
   });
-
-  console.log(today, yesterday);
-  console.log(diffs);
 
   return (
     <StyledDiv>
@@ -129,7 +131,7 @@ export default function Ticker() {
       <StyledUl>
         {diffs.map((rate) => (
           <StyledRate
-            situation={
+            $situation={
               Number(rate.percentage.split('%')[0]) >= 0 ? 'up' : 'down'
             }
             key={rate.baseToQuote}

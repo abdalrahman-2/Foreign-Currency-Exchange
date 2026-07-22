@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { getLiveMarkets } from '../api/apiTicker';
+import getLiveMarkets from '../api/apiTicker';
 
-export default function useTicker() {
+export default function useTicker(base: string) {
   const { isPending, data, error } = useQuery({
-    queryKey: ['ticker'],
-    queryFn: getLiveMarkets,
+    queryKey: ['ticker', base],
+    queryFn: () => getLiveMarkets(base),
+    refetchOnMount: false,
   });
 
   return { isPending, data, error };

@@ -4,6 +4,7 @@ import CurrencyButton from './CurrencyButton';
 import SwapButton from './SwapButton';
 import FavoritButton from './FavoriteButton';
 import LogButton from './LogButton';
+import { useSearchParams } from 'react-router-dom';
 
 const StyledForm = styled.form`
   background-color: var(--neutral-700);
@@ -23,7 +24,7 @@ const StyledCurrencyPickersContainer = styled.div`
   }
 `;
 
-const StyledCurrencyPicker = styled.div`
+const StyledCurrencyTaker = styled.div`
   background-color: var(--neutral-600);
   border-radius: var(--radius-16);
   padding: var(--spacing-250);
@@ -93,34 +94,48 @@ const StyledText = styled.p`
 `;
 
 export default function ConverterForm() {
+  const [searchParams, setSearchPrams] = useSearchParams();
+  const base = searchParams.get('base') || 'USD';
+  const quote = searchParams.get('quote') || 'EGP';
+
+  function handleSwapButton() {
+    const temp = base;
+    setSearchPrams({
+      base: quote,
+      quote: temp,
+    });
+  }
+
   return (
     <section className="flex flex-col gap-[12px]">
       <h2 className="text-preset-2">check the rate</h2>
       <StyledForm>
         <StyledCurrencyPickersContainer>
           {/* send */}
-          <StyledCurrencyPicker>
+          <StyledCurrencyTaker>
             <p className="text-preset-4">send</p>
             <div className="flex justify-between">
               <AmmountInput type="send" />
-              <CurrencyButton type="send" currency="USD" countryName="us" />
+              <CurrencyButton $type="send" currency_iso={base} />
             </div>
-          </StyledCurrencyPicker>
-          <SwapButton />
+          </StyledCurrencyTaker>
+          <SwapButton onClick={handleSwapButton} />
           {/* recieve */}
-          <StyledCurrencyPicker>
+          <StyledCurrencyTaker>
             <p className="text-preset-4">receive</p>
             <div className="flex justify-between">
               <AmmountInput type="receive" />
-              <CurrencyButton type="receive" currency="EGP" countryName="eg" />
+              <CurrencyButton $type="receive" currency_iso={quote} />
             </div>
-          </StyledCurrencyPicker>
+          </StyledCurrencyTaker>
         </StyledCurrencyPickersContainer>
 
         {/* ****************************************************************** */}
 
         <StyledButtonsContainer>
-          <StyledText className="text-preset-5">1 USD = 0.853 EGP</StyledText>
+          <StyledText className="text-preset-5">
+            1 {base} = 0.853 {quote}
+          </StyledText>
           <div className="flex gap-[12px]">
             <FavoritButton state="empty" onClick={(e) => e.preventDefault()} />
             <LogButton state="empty" />
