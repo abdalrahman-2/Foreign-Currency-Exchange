@@ -13,11 +13,6 @@ const StyledTab = styled.li<{ state: Props['state'] }>`
   &:hover {
     border-bottom-color: var(--lime-500);
   }
-
-  &:focus {
-    outline: 1px solid var(--lime-500);
-    outline-offset: 3px;
-  }
 `;
 
 export default function Tab({ state = 'default', children }: Props) {
