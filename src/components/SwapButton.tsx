@@ -1,8 +1,5 @@
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-
-type props = {
-  onClick: () => void;
-};
 
 const StyledButton = styled.button`
   background-color: var(--neutral-600);
@@ -42,9 +39,21 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function SwapButton({ onClick }: props) {
+export default function SwapButton() {
+  const [searchParams, setSearchPrams] = useSearchParams();
+  const base = searchParams.get('base') || 'USD';
+  const quote = searchParams.get('quote') || 'EGP';
+
+  function handleSwapButton() {
+    const temp = base;
+    setSearchPrams({
+      base: quote,
+      quote: temp,
+    });
+  }
+
   return (
-    <StyledButton type="button" onClick={onClick}>
+    <StyledButton type="button" onClick={handleSwapButton}>
       <img
         className="big-screen"
         src="../../assets/images/icon-exchange.svg"

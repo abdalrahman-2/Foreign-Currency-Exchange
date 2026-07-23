@@ -102,7 +102,7 @@ const StyledText = styled.p`
 `;
 
 export default function ConverterForm() {
-  const [searchParams, setSearchPrams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
@@ -110,12 +110,12 @@ export default function ConverterForm() {
   const [receiveValue, setReceiveValue] = useState('');
 
   // defining initial states
-  const initialState1: State = {
+  const initialFormState1: State = {
     $type: 'send',
     showPicker: false,
   };
 
-  const initialState2: State = {
+  const initialFormState2: State = {
     $type: 'receive',
     showPicker: false,
   };
@@ -131,8 +131,14 @@ export default function ConverterForm() {
   }
 
   // defning the useReducers
-  const [state1, dispatch1] = useReducer(formDataReducer, initialState1);
-  const [state2, dispatch2] = useReducer(formDataReducer, initialState2);
+  const [formState1, dispatch1] = useReducer(
+    formDataReducer,
+    initialFormState1,
+  );
+  const [formState2, dispatch2] = useReducer(
+    formDataReducer,
+    initialFormState2,
+  );
 
   const { isPending, error, data } = useTicker(base);
   if (isPending)
@@ -145,14 +151,6 @@ export default function ConverterForm() {
   if (!data) return <p>No data found!</p>;
   const { today } = data;
 
-  function handleSwapButton() {
-    const temp = base;
-    setSearchPrams({
-      base: quote,
-      quote: temp,
-    });
-  }
-
   return (
     <section className="flex flex-col gap-[12px]">
       <h2 className="text-preset-2">check the rate</h2>
@@ -160,32 +158,30 @@ export default function ConverterForm() {
         <StyledCurrencyPickersContainer>
           {/* send */}
           <FormDataContext.Provider
-            value={{ state: state1, dispatch: dispatch1 }}
+            value={{ state: formState1, dispatch: dispatch1 }}
           >
             <StyledCurrencyTaker>
               <p className="text-preset-4">send</p>
               <div className="flex justify-between">
                 <AmmountInput
-                  $type="send"
                   sendValue={sendValue}
                   setSendValue={setSendValue}
                   setReceiveValue={setReceiveValue}
                   rates={today}
-                  quote={quote}
                 />
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>
           </FormDataContext.Provider>
-          <SwapButton onClick={handleSwapButton} />
+          <SwapButton />
           {/* recieve */}
           <FormDataContext.Provider
-            value={{ state: state2, dispatch: dispatch2 }}
+            value={{ state: formState2, dispatch: dispatch2 }}
           >
             <StyledCurrencyTaker>
               <p className="text-preset-4">receive</p>
               <div className="flex justify-between">
-                <AmmountInput $type="receive" receiveValue={receiveValue} />
+                <AmmountInput receiveValue={receiveValue} />
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>
