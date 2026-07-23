@@ -1,9 +1,18 @@
-import type { InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-type props = {
-  type: 'send' | 'receive';
-} & InputHTMLAttributes<HTMLInputElement>;
+type Props =
+  | {
+      $type: 'send';
+      sendValue: string;
+      setSendValue: (value: string) => void;
+      setReceiveValue: (value: string) => void;
+      rates: { date: string; base: string; quote: string; rate: number }[];
+      quote: string;
+    }
+  | {
+      $type: 'receive';
+      receiveValue: string;
+    };
 
 const StyledWrapper = styled.label`
   display: inline-flex;
@@ -23,7 +32,7 @@ const StyledWrapper = styled.label`
   }
 `;
 
-const StyledInput = styled.input<{ $type: props['type'] }>`
+const StyledInput = styled.input<{ $type: 'send' | 'receive' }>`
   width: 100%;
   outline: none;
   color: ${({ $type }) =>
@@ -58,18 +67,37 @@ const StyledInput = styled.input<{ $type: props['type'] }>`
   }
 `;
 
-export default function AmmountInput({ type }: props) {
+export default function AmmountInput(props: Props) {
+  function handleAmmountOnchange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (props.$type !== 'send') return;
+    const rate = props.rates.find((rate) => rate.quote === props.quote)!.rate;
+    props.setSendValue(e.target.value);
+    props.setReceiveValue(String(Number(e.target.value) * rate));
+  }
+
   return (
     <StyledWrapper>
-      <StyledInput
-        type="number"
-        $type={type}
-        placeholder="0"
-        aria-label={
-          type === 'send' ? 'Send amount input' : 'Receive amount input'
-        }
-        className="text-preset-1"
-      />
+      {props.$type === 'receive' ? (
+        <StyledInput
+          type="number"
+          $type="receive"
+          placeholder="0"
+          aria-label="Receive amount input"
+          className="text-preset-1"
+          value={props.receiveValue}
+          readOnly
+        />
+      ) : (
+        <StyledInput
+          type="number"
+          $type="send"
+          placeholder="0"
+          aria-label="Send amount input"
+          className="text-preset-1"
+          value={props.sendValue}
+          onChange={handleAmmountOnchange}
+        />
+      )}
     </StyledWrapper>
   );
 }

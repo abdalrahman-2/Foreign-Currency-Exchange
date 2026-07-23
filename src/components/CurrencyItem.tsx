@@ -1,11 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useFormDataContext } from '../contexts/FormDataContext';
+import { Check } from 'lucide-react';
+import Flag from './Flag';
 
 type props = {
-  children: React.ReactNode;
-  setShowPicker: React.Dispatch<React.SetStateAction<boolean>>;
-  $type: 'send' | 'receive';
   iso_code: string;
+  currencyName: string;
 };
 
 const StyledLi = styled.li`
@@ -36,13 +37,12 @@ const StyledLi = styled.li`
   }
 `;
 
-export default function CurrencyItem({
-  children,
-  setShowPicker,
-  $type,
-  iso_code,
-}: props) {
-  const [, setSearchParams] = useSearchParams();
+export default function CurrencyItem({ iso_code, currencyName }: props) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const base = searchParams.get('base') || 'USD';
+  const quote = searchParams.get('quote') || 'EGP';
+  const { state, dispatch } = useFormDataContext();
+  const { $type } = state;
 
   // this handles currency picker changes
   function handleLiOnClick(iso_code: string) {
@@ -57,8 +57,7 @@ export default function CurrencyItem({
         return prev;
       });
     }
-
-    setShowPicker(false);
+    dispatch({ type: 'SET_SHOWPICKER', payload: false });
   }
 
   return (
@@ -68,11 +67,23 @@ export default function CurrencyItem({
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
           handleLiOnClick(iso_code);
-          setShowPicker(false);
         }
       }}
     >
-      {children}
+      <Flag currencyName={currencyName.toLowerCase()} size="small" />
+      <p className="text-preset-4">{iso_code}</p>
+      <p
+        className={
+          currencyName.length >= 20 ? `text-preset-6` : `text-preset-5`
+        }
+      >
+        {currencyName}
+      </p>
+
+      {(($type === 'send' && base === iso_code) ||
+        ($type === 'receive' && quote === iso_code)) && (
+        <Check className="w-[12px]" />
+      )}
     </StyledLi>
   );
 }

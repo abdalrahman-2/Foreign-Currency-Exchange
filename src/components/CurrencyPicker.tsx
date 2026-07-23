@@ -1,19 +1,16 @@
-import Flag from './Flag';
 import styled from 'styled-components';
 import { type Currency } from '../utils/types';
-import { useEffect, useRef, useState } from 'react';
 import CurrencyItem from './CurrencyItem';
+import { useState } from 'react';
 
 type props = {
   allCurrencies: Currency[];
-  $type: 'send' | 'receive';
-  setShowPicker: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const StyledCurrencyPicker = styled.div`
   margin-bottom: var(--spacing-125);
   width: calc(311 / 16 * 1rem);
-  height: calc(458 / 16 * 1rem);
+  max-height: calc(458 / 16 * 1rem);
   background-color: var(--neutral-600);
   border: 1px solid var(--neutral-400);
   border-radius: var(--radius-8);
@@ -32,6 +29,12 @@ const StyledCurrencyPicker = styled.div`
   /* hide scrollbar Chrome/Safari */
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  @media (max-width: 23.4375em) {
+    top: 65px;
+    right: -21px;
+    z-index: 2;
   }
 `;
 
@@ -79,27 +82,9 @@ const StyledH3 = styled.h3`
   text-transform: uppercase;
 `;
 
-export default function CurrencyPicker({
-  allCurrencies,
-  $type,
-  setShowPicker,
-}: props) {
+export default function CurrencyPicker({ allCurrencies }: props) {
   const [resultsArr, srtResultsArr] = useState<Currency[]>([]);
-  const pickerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
-        setShowPicker(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [setShowPicker]);
+  const [value, setValue] = useState<string>('');
 
   const popularCurrencies = [
     {
@@ -130,19 +115,21 @@ export default function CurrencyPicker({
 
   // this handles search bar
   function handleOnChangeSearchBar(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
+    setValue(e.target.value);
     srtResultsArr(
       allCurrencies.filter((currency: Currency) => {
         return (
-          currency.iso_code.toLowerCase().includes(value.toLowerCase()) ||
-          currency.name.toLowerCase().includes(value.toLowerCase())
+          currency.iso_code
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          currency.name.toLowerCase().includes(e.target.value.toLowerCase())
         );
       }),
     );
   }
 
   return (
-    <StyledCurrencyPicker ref={pickerRef}>
+    <StyledCurrencyPicker>
       <StyledSearchBar htmlFor="search">
         <img
           className="w-[16px] h-[20px]"
@@ -153,6 +140,7 @@ export default function CurrencyPicker({
           type="text"
           placeholder="Search currencies..."
           onChange={handleOnChangeSearchBar}
+          value={value}
         />
       </StyledSearchBar>
 
@@ -166,22 +154,9 @@ export default function CurrencyPicker({
             {popularCurrencies.map((currency) => (
               <CurrencyItem
                 key={currency.iso_code}
-                setShowPicker={setShowPicker}
-                $type={$type}
                 iso_code={currency.iso_code}
-              >
-                <Flag currencyName={currency.name.toLowerCase()} size="small" />
-                <p className="text-preset-4">{currency.iso_code}</p>
-                <p
-                  className={
-                    currency.name.length >= 20
-                      ? `text-preset-6`
-                      : `text-preset-5`
-                  }
-                >
-                  {currency.name}
-                </p>
-              </CurrencyItem>
+                currencyName={currency.name}
+              />
             ))}
           </ul>
 
@@ -193,22 +168,9 @@ export default function CurrencyPicker({
             {allCurrencies.map((currency: Currency) => (
               <CurrencyItem
                 key={currency.iso_code}
-                setShowPicker={setShowPicker}
-                $type={$type}
                 iso_code={currency.iso_code}
-              >
-                <Flag currencyName={currency.name.toLowerCase()} size="small" />
-                <p className="text-preset-4">{currency.iso_code}</p>
-                <p
-                  className={
-                    currency.name.length >= 20
-                      ? `text-preset-6`
-                      : `text-preset-5`
-                  }
-                >
-                  {currency.name}
-                </p>
-              </CurrencyItem>
+                currencyName={currency.name}
+              />
             ))}
           </ul>
         </>
@@ -217,20 +179,9 @@ export default function CurrencyPicker({
           {resultsArr.map((currency: Currency) => (
             <CurrencyItem
               key={currency.iso_code}
-              setShowPicker={setShowPicker}
-              $type={$type}
               iso_code={currency.iso_code}
-            >
-              <Flag currencyName={currency.name.toLowerCase()} size="small" />
-              <p className="text-preset-4">{currency.iso_code}</p>
-              <p
-                className={
-                  currency.name.length >= 20 ? `text-preset-6` : `text-preset-5`
-                }
-              >
-                {currency.name}
-              </p>
-            </CurrencyItem>
+              currencyName={currency.name}
+            />
           ))}
         </ul>
       )}

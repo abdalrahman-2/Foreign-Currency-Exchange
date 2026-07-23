@@ -5,6 +5,14 @@ import SwapButton from './SwapButton';
 import FavoritButton from './FavoriteButton';
 import LogButton from './LogButton';
 import { useSearchParams } from 'react-router-dom';
+import {
+  FormDataContext,
+  type Action,
+  type State,
+} from '../contexts/FormDataContext';
+import { useReducer, useState } from 'react';
+import useTicker from '../hooks/useTicker';
+import Loader from './Loader';
 
 const StyledForm = styled.form`
   background-color: var(--neutral-700);
@@ -63,7 +71,7 @@ const StyledCurrencyTaker = styled.div`
 
   // 690 px
   @media (max-width: 43.125em) {
-    width: 100%;
+    width: calc(311 / 16 * 1rem);
     height: calc(109 / 16 * 1rem);
   }
 `;
@@ -98,6 +106,45 @@ export default function ConverterForm() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
+  const [sendValue, setSendValue] = useState('');
+  const [receiveValue, setReceiveValue] = useState('');
+
+  // defining initial states
+  const initialState1: State = {
+    $type: 'send',
+    showPicker: false,
+  };
+
+  const initialState2: State = {
+    $type: 'receive',
+    showPicker: false,
+  };
+
+  // defining the reducer
+  function formDataReducer(state: State, action: Action): State {
+    switch (action.type) {
+      case 'SET_TYPE':
+        return { ...state, $type: action.payload };
+      case 'SET_SHOWPICKER':
+        return { ...state, showPicker: action.payload };
+    }
+  }
+
+  // defning the useReducers
+  const [state1, dispatch1] = useReducer(formDataReducer, initialState1);
+  const [state2, dispatch2] = useReducer(formDataReducer, initialState2);
+
+  const { isPending, error, data } = useTicker(base);
+  if (isPending)
+    return (
+      <StyledCurrencyTaker>
+        <Loader />
+      </StyledCurrencyTaker>
+    );
+  if (error) return <div>Error: {error.message}</div>;
+  if (!data) return <p>No data found!</p>;
+  const { today } = data;
+
   function handleSwapButton() {
     const temp = base;
     setSearchPrams({
@@ -112,29 +159,45 @@ export default function ConverterForm() {
       <StyledForm>
         <StyledCurrencyPickersContainer>
           {/* send */}
-          <StyledCurrencyTaker>
-            <p className="text-preset-4">send</p>
-            <div className="flex justify-between">
-              <AmmountInput type="send" />
-              <CurrencyButton $type="send" currency_iso={base} />
-            </div>
-          </StyledCurrencyTaker>
+          <FormDataContext.Provider
+            value={{ state: state1, dispatch: dispatch1 }}
+          >
+            <StyledCurrencyTaker>
+              <p className="text-preset-4">send</p>
+              <div className="flex justify-between">
+                <AmmountInput
+                  $type="send"
+                  sendValue={sendValue}
+                  setSendValue={setSendValue}
+                  setReceiveValue={setReceiveValue}
+                  rates={today}
+                  quote={quote}
+                />
+                <CurrencyButton />
+              </div>
+            </StyledCurrencyTaker>
+          </FormDataContext.Provider>
           <SwapButton onClick={handleSwapButton} />
           {/* recieve */}
-          <StyledCurrencyTaker>
-            <p className="text-preset-4">receive</p>
-            <div className="flex justify-between">
-              <AmmountInput type="receive" />
-              <CurrencyButton $type="receive" currency_iso={quote} />
-            </div>
-          </StyledCurrencyTaker>
+          <FormDataContext.Provider
+            value={{ state: state2, dispatch: dispatch2 }}
+          >
+            <StyledCurrencyTaker>
+              <p className="text-preset-4">receive</p>
+              <div className="flex justify-between">
+                <AmmountInput $type="receive" receiveValue={receiveValue} />
+                <CurrencyButton />
+              </div>
+            </StyledCurrencyTaker>
+          </FormDataContext.Provider>
         </StyledCurrencyPickersContainer>
 
         {/* ****************************************************************** */}
 
         <StyledButtonsContainer>
           <StyledText className="text-preset-5">
-            1 {base} = 0.853 {quote}
+            1 {base} = {today.find((rate) => rate.quote === quote)?.rate}{' '}
+            {quote}
           </StyledText>
           <div className="flex gap-[12px]">
             <FavoritButton state="empty" onClick={(e) => e.preventDefault()} />

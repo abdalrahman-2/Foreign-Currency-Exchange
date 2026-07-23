@@ -2,14 +2,11 @@ import styled from 'styled-components';
 import { CurrencyPicker, Flag, Loader } from '.';
 import usePicker from '../hooks/usePicker';
 import { type Currency } from '../utils/types';
-import { useState } from 'react';
+import { useFormDataContext } from '../contexts/FormDataContext';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 
-type props = {
-  currency_iso: string;
-  $type: 'send' | 'receive';
-};
-
-const StyledCurrencyButton = styled.button<{ $type: props['$type'] }>`
+const StyledCurrencyButton = styled.button<{ $type: 'send' | 'receive' }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,24 +34,46 @@ const StyledCurrencyButton = styled.button<{ $type: props['$type'] }>`
 `;
 
 ///////////////////////////////////////////////////////////////
-export default function CurrencyButton({ currency_iso, $type }: props) {
+export default function CurrencyButton() {
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  const [searchParams] = useSearchParams();
+  const base = searchParams.get('base') || 'USD';
+  const quote = searchParams.get('quote') || 'EGP';
+
   const { isPending, data: allCurrencies, error } = usePicker();
-  const [showPicker, setShowPicker] = useState<boolean>(false);
+
+  const { state, dispatch } = useFormDataContext();
+  const { $type, showPicker } = state;
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+        dispatch({ type: 'SET_SHOWPICKER', payload: false });
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dispatch]);
 
   if (isPending) return <Loader />;
   if (error) console.log(error.message);
 
   function handleOnClick() {
-    setShowPicker((prevState) => !prevState);
+    dispatch({ type: 'SET_SHOWPICKER', payload: !state.showPicker });
   }
 
   const alt =
     $type === 'send'
-      ? `Selected send currency: ${currency_iso}. Open send currency options`
-      : `Selected receive currency: ${currency_iso}. Open receive currency options`;
+      ? `Selected send currency: ${base}. Open send currency options`
+      : `Selected receive currency: ${quote}. Open receive currency options`;
 
   return (
-    <div className="relative">
+    <div className="relative" ref={buttonRef}>
       <StyledCurrencyButton
         type="button"
         $type={$type}
@@ -65,20 +84,15 @@ export default function CurrencyButton({ currency_iso, $type }: props) {
           size="small"
           currencyName={
             allCurrencies.find(
-              (currency: Currency) => currency.iso_code === currency_iso,
-            ).name
+              (currency: Currency) =>
+                currency.iso_code === ($type === 'send' ? base : quote),
+            )?.name
           }
         />
-        <p>{currency_iso}</p>
+        <p>{$type === 'send' ? base : quote}</p>
         <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
       </StyledCurrencyButton>
-      {showPicker && (
-        <CurrencyPicker
-          allCurrencies={allCurrencies}
-          $type={$type}
-          setShowPicker={setShowPicker}
-        />
-      )}
+      {showPicker && <CurrencyPicker allCurrencies={allCurrencies} />}
     </div>
   );
 }

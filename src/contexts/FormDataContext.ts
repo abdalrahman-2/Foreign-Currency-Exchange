@@ -2,13 +2,13 @@ import { createContext, useContext, type Dispatch } from 'react';
 
 // defining the type of the state
 export type State = {
-  $type: 'send' | 'recieve';
+  $type: 'send' | 'receive';
   showPicker: boolean;
 };
 
 // defining the type of the action
 export type Action =
-  | { type: 'SET_TYPE'; payload: 'send' | 'recieve' }
+  | { type: 'SET_TYPE'; payload: 'send' | 'receive' }
   | { type: 'SET_SHOWPICKER'; payload: boolean };
 
 // defining the type of the context
@@ -25,8 +25,10 @@ export function useFormDataContext() {
   const formDataContext = useContext(FormDataContext);
 
   if (!formDataContext) {
-    return new Error(
+    throw new Error(
       'useFormDataContext must be used inside FormDataContextProvider',
     );
   }
+
+  return formDataContext;
 }
