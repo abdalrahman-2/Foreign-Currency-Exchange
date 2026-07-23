@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
 import { ConverterForm, Header, Main } from '../components';
+import RoutesContainer from '../components/RoutesContainer';
 
 export default function AppLayout() {
   return (
@@ -7,7 +7,7 @@ export default function AppLayout() {
       <Header />
       <Main>
         <ConverterForm />
-        <Outlet />
+        <RoutesContainer />
       </Main>
     </>
   );

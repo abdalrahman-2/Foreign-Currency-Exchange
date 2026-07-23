@@ -6,12 +6,16 @@ type props = {
 };
 
 const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-400);
   padding: var(--spacing-600) var(--spacing-400);
   max-width: 68.75rem;
   margin: 0 auto;
 
   @media (max-width: 48.125em) {
     padding: var(--spacing-600) var(--spacing-300);
+    gap: var(--spacing-500);
   }
 
   @media (max-width: 23.4375em) {
