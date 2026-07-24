@@ -7,13 +7,13 @@ type props = {
 };
 
 // defining the type of the state
-export type State = {
+type State = {
   $type: 'send' | 'receive';
   showPicker: boolean;
 };
 
 // defining the type of the action
-export type Action =
+type Action =
   | { type: 'SET_TYPE'; payload: 'send' | 'receive' }
   | { type: 'SET_SHOWPICKER'; payload: boolean };
 
@@ -26,6 +26,7 @@ type FormDataContextType = {
 // creating the context
 const FormDataContext = createContext<FormDataContextType | null>(null);
 
+// creating the provider
 export function FormDataProvider({ $type, children }: props) {
   // defining initial states
   const initialFormState1: State = {
@@ -44,6 +45,8 @@ export function FormDataProvider({ $type, children }: props) {
         return { ...state, $type: action.payload };
       case 'SET_SHOWPICKER':
         return { ...state, showPicker: action.payload };
+      default:
+        throw new Error('Unknown action type');
     }
   }
 
