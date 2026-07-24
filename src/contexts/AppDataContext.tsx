@@ -18,8 +18,8 @@ type Action =
 
 // defining the type of the context
 type AppDataContextType = {
-  state: State;
-  dispatch: Dispatch<Action>;
+  appState: State;
+  appDispatch: Dispatch<Action>;
 };
 
 // creating the context
@@ -28,12 +28,12 @@ const AppDataContext = createContext<AppDataContextType | null>(null);
 // creating the provider
 export function AppDataProvider({ children }: props) {
   const initialState: State = {
-    sendAmmount: '0',
-    receiveAmmount: '0',
+    sendAmmount: '',
+    receiveAmmount: '',
   };
 
   function appDataReducer(state: State, action: Action) {
-    switch (action.payload) {
+    switch (action.type) {
       case 'SET_SEND_AMMOUNT':
         return { ...state, sendAmmount: action.payload };
       case 'SET_RECEIVE_AMMOUNT':
@@ -43,11 +43,13 @@ export function AppDataProvider({ children }: props) {
     }
   }
 
-  const [state, dispatch] = useReducer(appDataReducer, initialState);
+  const [appState, appDispatch] = useReducer(appDataReducer, initialState);
 
-  <AppDataContext.Provider value={{ state, dispatch }}>
-    {children}
-  </AppDataContext.Provider>;
+  return (
+    <AppDataContext.Provider value={{ appState, appDispatch }}>
+      {children}
+    </AppDataContext.Provider>
+  );
 }
 
 // creating the hook

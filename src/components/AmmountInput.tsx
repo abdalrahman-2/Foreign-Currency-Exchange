@@ -1,12 +1,9 @@
 import styled from 'styled-components';
 import { useFormData } from '../contexts/FormDataContext';
 import { useSearchParams } from 'react-router-dom';
+import { useAppData } from '../contexts/AppDataContext';
 
 type Props = {
-  sendValue?: string;
-  receiveValue?: string;
-  setSendValue?: (value: string) => void;
-  setReceiveValue?: (value: string) => void;
   rates?: { date: string; base: string; quote: string; rate: number }[];
 };
 
@@ -70,11 +67,17 @@ export default function AmmountInput(props: Props) {
   const { state } = useFormData();
   const { $type } = state;
 
+  const { appState, appDispatch } = useAppData();
+  const { sendAmmount, receiveAmmount } = appState;
+
   function handleAmmountOnchange(e: React.ChangeEvent<HTMLInputElement>) {
     if ($type !== 'send') return;
     const rate = props.rates!.find((rate) => rate.quote === quote)!.rate;
-    props.setSendValue!(e.target.value);
-    props.setReceiveValue!(String(Number(e.target.value) * rate));
+    appDispatch({ type: 'SET_SEND_AMMOUNT', payload: e.target.value });
+    appDispatch({
+      type: 'SET_RECEIVE_AMMOUNT',
+      payload: String(Number(e.target.value) * rate),
+    });
   }
 
   return (
@@ -86,7 +89,7 @@ export default function AmmountInput(props: Props) {
           placeholder="0"
           aria-label="Receive amount input"
           className="text-preset-3"
-          value={props.receiveValue}
+          value={receiveAmmount}
           readOnly
         />
       ) : (
@@ -96,7 +99,7 @@ export default function AmmountInput(props: Props) {
           placeholder="0"
           aria-label="Send amount input"
           className="text-preset-1"
-          value={props.sendValue}
+          value={sendAmmount}
           onChange={handleAmmountOnchange}
         />
       )}

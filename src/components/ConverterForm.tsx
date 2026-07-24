@@ -6,7 +6,6 @@ import FavoritButton from './FavoriteButton';
 import LogButton from './LogButton';
 import { useSearchParams } from 'react-router-dom';
 import { FormDataProvider } from '../contexts/FormDataContext';
-import { useState } from 'react';
 import useTicker from '../hooks/useTicker';
 import Loader from './Loader';
 
@@ -102,9 +101,6 @@ export default function ConverterForm() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
-  const [sendValue, setSendValue] = useState('');
-  const [receiveValue, setReceiveValue] = useState('');
-
   const { isPending, error, data } = useTicker(base);
   if (isPending)
     return (
@@ -126,12 +122,7 @@ export default function ConverterForm() {
             <StyledCurrencyTaker>
               <p className="text-preset-4">send</p>
               <div className="flex justify-between">
-                <AmmountInput
-                  sendValue={sendValue}
-                  setSendValue={setSendValue}
-                  setReceiveValue={setReceiveValue}
-                  rates={today}
-                />
+                <AmmountInput rates={today} />
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>
@@ -142,7 +133,7 @@ export default function ConverterForm() {
             <StyledCurrencyTaker>
               <p className="text-preset-4">receive</p>
               <div className="flex justify-between">
-                <AmmountInput receiveValue={receiveValue} />
+                <AmmountInput />
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>

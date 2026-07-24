@@ -29,7 +29,7 @@ export default function RoutesContainer() {
       {/* Desktop Nav*/}
       <StyledNav className="max-[28.125em]:hidden">
         <StyledUl>
-          <Tab state={pathname === '/' ? 'chosen' : 'default'}>
+          <Tab $state={pathname === '/' ? 'chosen' : 'default'}>
             <NavLink
               to={`/${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"
@@ -37,7 +37,7 @@ export default function RoutesContainer() {
               History
             </NavLink>
           </Tab>
-          <Tab state={pathname === '/compare' ? 'chosen' : 'default'}>
+          <Tab $state={pathname === '/compare' ? 'chosen' : 'default'}>
             <NavLink
               to={`/compare${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"
@@ -45,7 +45,7 @@ export default function RoutesContainer() {
               compare
             </NavLink>
           </Tab>
-          <Tab state={pathname === '/favorites' ? 'chosen' : 'default'}>
+          <Tab $state={pathname === '/favorites' ? 'chosen' : 'default'}>
             <NavLink
               to={`/favorites${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"
@@ -53,7 +53,7 @@ export default function RoutesContainer() {
               favorites
             </NavLink>
           </Tab>
-          <Tab state={pathname === '/logs' ? 'chosen' : 'default'}>
+          <Tab $state={pathname === '/logs' ? 'chosen' : 'default'}>
             <NavLink
               to={`/logs${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"

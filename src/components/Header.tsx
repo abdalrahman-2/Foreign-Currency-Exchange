@@ -32,8 +32,6 @@ export default function Header() {
   if (isPending) return <Loader />;
   if (!data || error) throw new Error(error?.message);
 
-  console.log(data);
-
   return (
     <header>
       <StyledDiv>

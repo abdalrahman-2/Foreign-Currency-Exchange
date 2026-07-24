@@ -7,6 +7,7 @@ import History from './pages/History';
 import Logs from './pages/Logs';
 import Compare from './pages/Compare';
 import Favorites from './pages/Favorites';
+import { AppDataProvider } from './contexts/AppDataContext';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,20 +19,22 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <BrowserRouter>
+    <AppDataProvider>
       <QueryClientProvider client={queryClient}>
         <GlobalStyles />
-        <Routes>
-          <Route path="/" element={<AppLayout />}>
-            <Route index element={<History />} />
-            <Route path="compare" element={<Compare />} />
-            <Route path="favorites" element={<Favorites />} />
-            <Route path="logs" element={<Logs />} />
-          </Route>
-        </Routes>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<AppLayout />}>
+              <Route index element={<History />} />
+              <Route path="compare" element={<Compare />} />
+              <Route path="favorites" element={<Favorites />} />
+              <Route path="logs" element={<Logs />} />
+            </Route>
+          </Routes>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </BrowserRouter>
       </QueryClientProvider>
-    </BrowserRouter>
+    </AppDataProvider>
   );
 }
 
