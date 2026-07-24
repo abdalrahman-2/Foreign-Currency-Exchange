@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useFormDataContext } from '../contexts/FormDataContext';
+import { useFormData } from '../contexts/FormDataContext';
 import { Check } from 'lucide-react';
 import Flag from './Flag';
 
@@ -41,7 +41,7 @@ export default function CurrencyItem({ iso_code, currencyName }: props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
-  const { state, dispatch } = useFormDataContext();
+  const { state, dispatch } = useFormData();
   const { $type } = state;
 
   // this handles currency picker changes

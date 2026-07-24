@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Logo from './Logo';
 // import { useEffect } from 'react';
 import TickerBar from './TickerBar';
+import usePicker from '../hooks/useAllCurrencies';
+import Loader from './Loader';
 
 const StyledDiv = styled.div`
   height: calc(66 / 16 * 1rem);
@@ -25,11 +27,20 @@ const StyledDiv = styled.div`
 `;
 
 export default function Header() {
+  const { isPending, data, error } = usePicker();
+
+  if (isPending) return <Loader />;
+  if (!data || error) throw new Error(error?.message);
+
+  console.log(data);
+
   return (
     <header>
       <StyledDiv>
         <Logo />
-        <p className="text-preset-4">55 CURRENCIES · EOD · ECB DATA</p>
+        <p className="text-preset-4">
+          {data.length} CURRENCIES · EOD · ECB DATA
+        </p>
       </StyledDiv>
       <TickerBar />
     </header>

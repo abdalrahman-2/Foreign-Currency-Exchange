@@ -5,12 +5,8 @@ import SwapButton from './SwapButton';
 import FavoritButton from './FavoriteButton';
 import LogButton from './LogButton';
 import { useSearchParams } from 'react-router-dom';
-import {
-  FormDataContext,
-  type Action,
-  type State,
-} from '../contexts/FormDataContext';
-import { useReducer, useState } from 'react';
+import { FormDataProvider } from '../contexts/FormDataContext';
+import { useState } from 'react';
 import useTicker from '../hooks/useTicker';
 import Loader from './Loader';
 
@@ -109,37 +105,6 @@ export default function ConverterForm() {
   const [sendValue, setSendValue] = useState('');
   const [receiveValue, setReceiveValue] = useState('');
 
-  // defining initial states
-  const initialFormState1: State = {
-    $type: 'send',
-    showPicker: false,
-  };
-
-  const initialFormState2: State = {
-    $type: 'receive',
-    showPicker: false,
-  };
-
-  // defining the reducer
-  function formDataReducer(state: State, action: Action): State {
-    switch (action.type) {
-      case 'SET_TYPE':
-        return { ...state, $type: action.payload };
-      case 'SET_SHOWPICKER':
-        return { ...state, showPicker: action.payload };
-    }
-  }
-
-  // defning the useReducers
-  const [formState1, dispatch1] = useReducer(
-    formDataReducer,
-    initialFormState1,
-  );
-  const [formState2, dispatch2] = useReducer(
-    formDataReducer,
-    initialFormState2,
-  );
-
   const { isPending, error, data } = useTicker(base);
   if (isPending)
     return (
@@ -157,9 +122,7 @@ export default function ConverterForm() {
       <StyledForm>
         <StyledCurrencyPickersContainer>
           {/* send */}
-          <FormDataContext.Provider
-            value={{ state: formState1, dispatch: dispatch1 }}
-          >
+          <FormDataProvider $type="send">
             <StyledCurrencyTaker>
               <p className="text-preset-4">send</p>
               <div className="flex justify-between">
@@ -172,12 +135,10 @@ export default function ConverterForm() {
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>
-          </FormDataContext.Provider>
+          </FormDataProvider>
           <SwapButton />
           {/* recieve */}
-          <FormDataContext.Provider
-            value={{ state: formState2, dispatch: dispatch2 }}
-          >
+          <FormDataProvider $type="receive">
             <StyledCurrencyTaker>
               <p className="text-preset-4">receive</p>
               <div className="flex justify-between">
@@ -185,7 +146,7 @@ export default function ConverterForm() {
                 <CurrencyButton />
               </div>
             </StyledCurrencyTaker>
-          </FormDataContext.Provider>
+          </FormDataProvider>
         </StyledCurrencyPickersContainer>
 
         {/* ****************************************************************** */}

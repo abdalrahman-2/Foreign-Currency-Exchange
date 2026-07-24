@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { CurrencyPicker, Flag, Loader } from '.';
-import usePicker from '../hooks/usePicker';
+import useAllCurrencies from '../hooks/useAllCurrencies';
 import { type Currency } from '../utils/types';
-import { useFormDataContext } from '../contexts/FormDataContext';
+import { useFormData } from '../contexts/FormDataContext';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 
@@ -41,9 +41,9 @@ export default function CurrencyButton() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
-  const { isPending, data: allCurrencies, error } = usePicker();
+  const { isPending, data: allCurrencies, error } = useAllCurrencies();
 
-  const { state, dispatch } = useFormDataContext();
+  const { state, dispatch } = useFormData();
   const { $type, showPicker } = state;
 
   useEffect(() => {

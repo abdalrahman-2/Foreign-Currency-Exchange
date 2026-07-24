@@ -3,7 +3,10 @@ import GlobalStyles from './styles/GlobalStyles';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AppLayout from './pages/AppLayout';
-import { History, Logs, Compare, Favorites } from './components';
+import History from './pages/History';
+import Logs from './pages/Logs';
+import Compare from './pages/Compare';
+import Favorites from './pages/Favorites';
 
 const queryClient = new QueryClient({
   defaultOptions: {

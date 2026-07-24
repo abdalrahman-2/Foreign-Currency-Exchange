@@ -14,7 +14,3 @@ export { default as Loader } from './Loader';
 export { default as Main } from './Main';
 export { default as ConverterForm } from './ConverterForm';
 export { default as CurrencyPicker } from './CurrencyPicker';
-export { default as History } from './History';
-export { default as Logs } from './Logs';
-export { default as Compare } from './Compare';
-export { default as Favorites } from './Favorites';

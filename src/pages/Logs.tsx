@@ -1,4 +1,4 @@
-import Empty from './Empty';
+import Empty from '../components/Empty';
 
 export default function Logs() {
   return (

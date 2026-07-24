@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useFormDataContext } from '../contexts/FormDataContext';
+import { useFormData } from '../contexts/FormDataContext';
 import { useSearchParams } from 'react-router-dom';
 
 type Props = {
@@ -67,7 +67,7 @@ export default function AmmountInput(props: Props) {
   const [searchParams] = useSearchParams();
   const quote = searchParams.get('quote') || 'EGP';
 
-  const { state } = useFormDataContext();
+  const { state } = useFormData();
   const { $type } = state;
 
   function handleAmmountOnchange(e: React.ChangeEvent<HTMLInputElement>) {
