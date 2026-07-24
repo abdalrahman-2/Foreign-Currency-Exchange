@@ -14,3 +14,4 @@ export { default as Loader } from './Loader';
 export { default as Main } from './Main';
 export { default as ConverterForm } from './ConverterForm';
 export { default as CurrencyPicker } from './CurrencyPicker';
+export { default as CompareItem } from './CompareItem';

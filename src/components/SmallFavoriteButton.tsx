@@ -2,10 +2,10 @@ import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type props = {
-  state: 'notFavorited' | 'favorited';
+  $state: 'notFavorited' | 'favorited';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const StyledButton = styled.button<{ state: props['state'] }>`
+const StyledButton = styled.button<{ $state: props['$state'] }>`
   // common styles
   width: 2rem;
   height: 2rem;
@@ -17,16 +17,16 @@ const StyledButton = styled.button<{ state: props['state'] }>`
   cursor: pointer;
 
   //defining the border based on the state if it not favorited or favorited
-  border: ${({ state }) =>
-    state === 'notFavorited'
+  border: ${({ $state }) =>
+    $state === 'notFavorited'
       ? '1px solid var(--neutral-500)'
       : '1px solid var(--lime-500)'};
 
   //defining the hover state if it not favorited or favorited
   &:hover {
     background-color: var(--neutral-500);
-    border: ${({ state }) =>
-      state === 'notFavorited' ? 'var(--neutral-400)' : ''};
+    border: ${({ $state }) =>
+      $state === 'notFavorited' ? 'var(--neutral-400)' : ''};
   }
 
   //defining the focus state
@@ -36,15 +36,15 @@ const StyledButton = styled.button<{ state: props['state'] }>`
   }
 `;
 
-export default function SmallFavoritButton({ state }: props) {
+export default function SmallFavoritButton({ $state }: props) {
   return (
     <StyledButton
-      state={state}
+      $state={$state}
       aria-label={
-        state === 'notFavorited' ? 'make it Favorite' : 'remove from favorite'
+        $state === 'notFavorited' ? 'make it Favorite' : 'remove from favorite'
       }
     >
-      {state === 'notFavorited' ? (
+      {$state === 'notFavorited' ? (
         <img
           src="../../assets/images/icon-star.svg"
           alt="Add this currency pair to favorites"
