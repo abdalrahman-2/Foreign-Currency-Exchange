@@ -168,7 +168,7 @@ export default function ConverterForm() {
                     : 'filled'
               }
             />
-            <LogButton state="empty" />
+            <LogButton state={`${sendAmmount !== '' ? 'filled' : 'empty'}`} />
           </div>
         </StyledButtonsContainer>
       </StyledForm>
