@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Empty, FavoriteItem } from '../components';
-import { getItems } from '../utils/helpers';
-import { useState } from 'react';
+import { useAppData } from '../contexts/AppDataContext';
 
 const StyledFavoritesContaner = styled.div`
   display: flex;
@@ -32,7 +31,8 @@ const StyledFavoritesList = styled.div`
 `;
 
 export default function Favorites() {
-  const [favorites] = useState(() => getItems('favoritePairs'));
+  const { appState } = useAppData();
+  const { favorites } = appState;
 
   if (Object.keys(favorites).length === 0) {
     return (
