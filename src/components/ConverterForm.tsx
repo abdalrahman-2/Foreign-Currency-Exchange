@@ -8,6 +8,8 @@ import { useSearchParams } from 'react-router-dom';
 import { FormDataProvider } from '../contexts/FormDataContext';
 import useTicker from '../hooks/useTicker';
 import Loader from './Loader';
+import { useAppData } from '../contexts/AppDataContext';
+import { checkIfPairFavorited } from '../utils/helpers';
 
 const StyledForm = styled.form`
   background-color: var(--neutral-700);
@@ -101,6 +103,9 @@ export default function ConverterForm() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
+  const { appState } = useAppData();
+  const { sendAmmount } = appState;
+
   const { isPending, error, data } = useTicker(base);
   if (isPending)
     return (
@@ -148,7 +153,15 @@ export default function ConverterForm() {
             {quote}
           </StyledText>
           <div className="flex gap-[12px]">
-            <FavoritButton state="empty" onClick={(e) => e.preventDefault()} />
+            <FavoritButton
+              $state={
+                checkIfPairFavorited(base, quote)
+                  ? 'favorited'
+                  : sendAmmount === ''
+                    ? 'empty'
+                    : 'filled'
+              }
+            />
             <LogButton state="empty" />
           </div>
         </StyledButtonsContainer>

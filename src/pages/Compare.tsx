@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import Empty from '../components/Empty';
 import { useAppData } from '../contexts/AppDataContext';
 import { useSearchParams } from 'react-router-dom';
 import useTicker from '../hooks/useTicker';
-import { CompareItem, Loader } from '../components';
+import { CompareItem, Loader, Empty } from '../components';
 import { rondomize } from '../utils/helpers';
 
 const StyledCompareContainer = styled.div`

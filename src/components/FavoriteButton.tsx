@@ -1,11 +1,13 @@
 import { type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
+import { getItems, setItems } from '../utils/helpers';
 
 type props = {
-  state: 'empty' | 'filled' | 'favorited';
+  $state: 'empty' | 'filled' | 'favorited';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const StyledButton = styled.button<{ $state: props['state'] }>`
+const StyledButton = styled.button<{ $state: props['$state'] }>`
   // common styles
   height: 2rem;
   display: flex;
@@ -60,15 +62,25 @@ const StyledButton = styled.button<{ $state: props['state'] }>`
   }
 `;
 
-export default function FavoritButton({ state, ...buttonProps }: props) {
+export default function FavoritButton({ $state }: props) {
+  const [searchParams] = useSearchParams();
+  const base = searchParams.get('base') || 'USD';
+  const quote = searchParams.get('quote') || 'EGP';
+
+  function handleOnClick() {
+    const favoritePairs = getItems('favoritePairs');
+    favoritePairs[`${base}/${quote}`] = true;
+    setItems('favoritePairs', favoritePairs);
+  }
+
   return (
     <StyledButton
-      $state={state}
+      $state={$state}
       type="button"
       className="text-preset-5-medium"
-      {...buttonProps}
+      onClick={handleOnClick}
     >
-      {state === 'empty' || state === 'filled' ? (
+      {$state === 'empty' || $state === 'filled' ? (
         <img
           src="../../assets/images/icon-star.svg"
           alt="Add this currency pair to favorites"

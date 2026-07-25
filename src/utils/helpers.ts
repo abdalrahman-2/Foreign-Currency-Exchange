@@ -9,3 +9,27 @@ export function rondomize<T>(arr: T[]): T[] {
 
   return shuffeledArr;
 }
+
+export function setItems(key: string, value: Record<string, unknown>) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function getItems(key: string) {
+  try {
+    const items = window.localStorage.getItem(key);
+    return items ? (JSON.parse(items) as Record<string, unknown>) : {};
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
+}
+
+export function checkIfPairFavorited(base: string, quote: string): boolean {
+  const tempPair = `${base}/${quote}`;
+  const favoritePairs = getItems('favoritePairs');
+  return tempPair in favoritePairs;
+}

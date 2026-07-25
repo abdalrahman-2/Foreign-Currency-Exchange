@@ -1,4 +1,4 @@
-import Empty from '../components/Empty';
+import { Empty } from '../components';
 
 export default function History() {
   return (

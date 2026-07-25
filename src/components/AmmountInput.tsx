@@ -89,7 +89,7 @@ export default function AmmountInput(props: Props) {
           placeholder="0"
           aria-label="Receive amount input"
           className="text-preset-3"
-          value={receiveAmmount}
+          value={String(Number(receiveAmmount).toFixed(2))}
           readOnly
         />
       ) : (

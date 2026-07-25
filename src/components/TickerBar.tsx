@@ -143,7 +143,10 @@ export default function Ticker() {
                 className="w-[8px] h-[8px] "
                 src={`../../assets/images/${Number(rate.percentage.split('%')[0]) >= 0 ? 'up' : 'down'}.png`}
               />
-              <span>{rate.percentage}</span>
+              <span>
+                {Number(rate.percentage.split('%')[0]) >= 0 ? '+' : ''}
+                {rate.percentage}
+              </span>
             </p>
           </StyledRate>
         ))}
