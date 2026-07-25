@@ -36,13 +36,14 @@ const StyledButton = styled.button<{ $state: props['$state'] }>`
   }
 `;
 
-export default function SmallFavoritButton({ $state }: props) {
+export default function SmallFavoritButton({ $state, ...props }: props) {
   return (
     <StyledButton
       $state={$state}
       aria-label={
         $state === 'notFavorited' ? 'make it Favorite' : 'remove from favorite'
       }
+      {...props}
     >
       {$state === 'notFavorited' ? (
         <img

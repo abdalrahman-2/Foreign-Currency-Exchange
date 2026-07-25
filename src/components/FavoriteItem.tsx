@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import useSingleRate from '../hooks/useSingleRate';
 import Loader from './Loader';
 import SmallFavoritButton from './SmallFavoriteButton';
+import { useAppData } from '../contexts/AppDataContext';
+import { handleFavoriteButtonOnClick } from '../utils/helpers';
 
 type props = {
   pair: string;
@@ -21,6 +23,9 @@ const StyledFavoriteItem = styled.li`
 export default function FavoriteItem({ pair }: props) {
   const base = pair.split('/')[0];
   const quote = pair.split('/')[1];
+
+  const { appState, appDispatch } = useAppData();
+  const { favorites } = appState;
 
   const { isPending, error, data } = useSingleRate(base, quote);
   if (isPending)
@@ -65,7 +70,12 @@ export default function FavoriteItem({ pair }: props) {
           </p>
         </span>
       </span>
-      <SmallFavoritButton $state="favorited" />
+      <SmallFavoritButton
+        $state="favorited"
+        onClick={() =>
+          handleFavoriteButtonOnClick(base, quote, favorites, appDispatch)
+        }
+      />
     </StyledFavoriteItem>
   );
 }
