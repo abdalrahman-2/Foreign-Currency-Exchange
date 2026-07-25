@@ -61,9 +61,7 @@ export default function Compare() {
   }
 
   const { today } = data;
-  console.log(today);
   const shuffeled = rondomize(today);
-  console.log(shuffeled);
 
   return (
     <StyledCompareContainer>
@@ -85,6 +83,7 @@ export default function Compare() {
           if (idx <= 7) {
             return (
               <CompareItem
+                base={base}
                 key={item.quote}
                 quote={item.quote}
                 rate={item.rate}

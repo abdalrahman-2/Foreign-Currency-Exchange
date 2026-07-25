@@ -4,8 +4,10 @@ import Loader from './Loader';
 import Flag from './Flag';
 import type { Currency } from '../utils/types';
 import SmallFavoritButton from './SmallFavoriteButton';
+import { checkIfPairFavorited } from '../utils/helpers';
 
 type props = {
+  base: string;
   quote: string;
   rate: number;
   ammount: string;
@@ -22,7 +24,7 @@ const StyledCompareItem = styled.li`
   border-radius: var(--radius-10);
 `;
 
-export default function CompareItem({ quote, rate, ammount }: props) {
+export default function CompareItem({ base, quote, rate, ammount }: props) {
   const { isPending, error, data: allCurrencies } = useAllCurrencies();
   if (isPending) {
     return (
@@ -59,7 +61,9 @@ export default function CompareItem({ quote, rate, ammount }: props) {
         </p>
         <p className="text-preset-6 text-[var(--neutral-200)]">@ {rate}</p>
       </span>
-      <SmallFavoritButton $state="notFavorited" />
+      <SmallFavoritButton
+        $state={`${checkIfPairFavorited(base, quote) ? 'favorited' : 'notFavorited'}`}
+      />
     </StyledCompareItem>
   );
 }
