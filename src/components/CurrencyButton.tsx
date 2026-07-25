@@ -57,7 +57,11 @@ export default function CurrencyButton() {
     };
   }, [dispatch]);
 
-  const { isPending, data: currency, error } = useCurrency(base);
+  const {
+    isPending,
+    data: currency,
+    error,
+  } = useCurrency($type === 'send' ? base : quote);
   if (isPending) return <Loader />;
   if (error) console.log(error.message);
 
