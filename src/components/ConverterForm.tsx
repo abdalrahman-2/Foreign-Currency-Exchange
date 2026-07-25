@@ -9,7 +9,10 @@ import { FormDataProvider } from '../contexts/FormDataContext';
 import useTicker from '../hooks/useTicker';
 import Loader from './Loader';
 import { useAppData } from '../contexts/AppDataContext';
-import { checkIfPairFavorited } from '../utils/helpers';
+import {
+  checkIfPairFavorited,
+  handleFavoriteButtonOnClick,
+} from '../utils/helpers';
 
 const StyledForm = styled.form`
   background-color: var(--neutral-700);
@@ -103,8 +106,8 @@ export default function ConverterForm() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
-  const { appState } = useAppData();
-  const { sendAmmount } = appState;
+  const { appState, appDispatch } = useAppData();
+  const { sendAmmount, favorites } = appState;
 
   const { isPending, error, data } = useTicker(base);
   if (isPending)
@@ -154,6 +157,9 @@ export default function ConverterForm() {
           </StyledText>
           <div className="flex gap-[12px]">
             <FavoritButton
+              onClick={() =>
+                handleFavoriteButtonOnClick(base, quote, favorites, appDispatch)
+              }
               $state={
                 checkIfPairFavorited(base, quote)
                   ? 'favorited'

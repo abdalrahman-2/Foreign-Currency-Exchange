@@ -37,9 +37,6 @@ export default function FavoriteItem({ pair }: props) {
   const rate = today.rate;
   const percentage = ((today.rate - yesterday.rate) / yesterday.rate) * 100;
 
-  console.log(today);
-  console.log(yesterday);
-
   return (
     <StyledFavoriteItem>
       <span className="flex gap-2 text-preset-4 grow text-[var(--neutral-50)]">

@@ -10,7 +10,7 @@ export function rondomize<T>(arr: T[]): T[] {
   return shuffeledArr;
 }
 
-export function setItems(key: string, value: Record<string, unknown>) {
+export function setFavorites(key: string, value: Record<string, unknown>) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
@@ -18,10 +18,10 @@ export function setItems(key: string, value: Record<string, unknown>) {
   }
 }
 
-export function getItems(key: string) {
+export function getFavorites(key: string) {
   try {
     const items = window.localStorage.getItem(key);
-    return items ? (JSON.parse(items) as Record<string, unknown>) : {};
+    return items ? (JSON.parse(items) as Record<string, boolean>) : {};
   } catch (error) {
     console.log(error);
     return {};
@@ -30,6 +30,27 @@ export function getItems(key: string) {
 
 export function checkIfPairFavorited(base: string, quote: string): boolean {
   const tempPair = `${base}/${quote}`;
-  const favoritePairs = getItems('favoritePairs');
+  const favoritePairs = getFavorites('favoritePairs');
   return tempPair in favoritePairs;
+}
+
+export function handleFavoriteButtonOnClick(
+  base: string,
+  quote: string,
+  favorites: Record<string, boolean>,
+  dispatcher: (action: {
+    type: 'SET_FAVORITES';
+    payload: Record<string, boolean>;
+  }) => void,
+) {
+  if (checkIfPairFavorited(base, quote)) {
+    const modifiedFavorites = { ...favorites };
+    delete modifiedFavorites[`${base}/${quote}`];
+    dispatcher({ type: 'SET_FAVORITES', payload: modifiedFavorites });
+  } else {
+    const modifiedFavorites = { ...favorites };
+    modifiedFavorites[`${base}/${quote}`] = true;
+    console.log(modifiedFavorites);
+    dispatcher({ type: 'SET_FAVORITES', payload: modifiedFavorites });
+  }
 }

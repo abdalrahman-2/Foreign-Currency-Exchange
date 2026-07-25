@@ -1,7 +1,5 @@
 import { type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
-import { getItems, setItems } from '../utils/helpers';
 
 type props = {
   $state: 'empty' | 'filled' | 'favorited';
@@ -62,23 +60,13 @@ const StyledButton = styled.button<{ $state: props['$state'] }>`
   }
 `;
 
-export default function FavoritButton({ $state }: props) {
-  const [searchParams] = useSearchParams();
-  const base = searchParams.get('base') || 'USD';
-  const quote = searchParams.get('quote') || 'EGP';
-
-  function handleOnClick() {
-    const favoritePairs = getItems('favoritePairs');
-    favoritePairs[`${base}/${quote}`] = true;
-    setItems('favoritePairs', favoritePairs);
-  }
-
+export default function FavoritButton({ $state, ...props }: props) {
   return (
     <StyledButton
       $state={$state}
       type="button"
       className="text-preset-5-medium"
-      onClick={handleOnClick}
+      {...props}
     >
       {$state === 'empty' || $state === 'filled' ? (
         <img

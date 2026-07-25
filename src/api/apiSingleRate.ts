@@ -2,7 +2,7 @@ import type { Rate } from '../utils/types';
 
 // const today = new Date();
 const yesterday = new Date();
-yesterday.setDate(yesterday.getDate() - 2);
+yesterday.setDate(yesterday.getDate() - 1);
 
 // const formattedToday = today.toISOString().split('T')[0];
 const formattedYesterday = yesterday.toISOString().split('T')[0];
