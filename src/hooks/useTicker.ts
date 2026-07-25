@@ -5,7 +5,6 @@ export default function useTicker(base: string) {
   const { isPending, data, error } = useQuery({
     queryKey: ['ticker', base],
     queryFn: () => getLiveMarkets(base),
-    refetchOnMount: false,
   });
 
   return { isPending, data, error };

@@ -3,7 +3,7 @@ import getCurrencies from '../api/apiAllCurrencies';
 
 export default function useAllCurrencies() {
   const { isPending, data, error } = useQuery({
-    queryKey: ['picker'],
+    queryKey: ['currencies'],
     queryFn: getCurrencies,
   });
 
