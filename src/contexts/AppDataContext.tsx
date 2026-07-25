@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer, type Dispatch } from 'react';
+import { getItems } from '../utils/helpers';
 
 // defining the type of the provider
 type props = {
@@ -9,12 +10,14 @@ type props = {
 type State = {
   sendAmmount: string;
   receiveAmmount: string;
+  favorites: Record<string, unknown>;
 };
 
 // defining the type of the action
 type Action =
   | { type: 'SET_SEND_AMMOUNT'; payload: string }
-  | { type: 'SET_RECEIVE_AMMOUNT'; payload: string };
+  | { type: 'SET_RECEIVE_AMMOUNT'; payload: string }
+  | { type: 'SET_FAVORITES'; payload: Record<string, boolean> };
 
 // defining the type of the context
 type AppDataContextType = {
@@ -30,6 +33,7 @@ export function AppDataProvider({ children }: props) {
   const initialState: State = {
     sendAmmount: '',
     receiveAmmount: '',
+    favorites: getItems('favoritePairs'),
   };
 
   function appDataReducer(state: State, action: Action) {
@@ -38,6 +42,8 @@ export function AppDataProvider({ children }: props) {
         return { ...state, sendAmmount: action.payload };
       case 'SET_RECEIVE_AMMOUNT':
         return { ...state, receiveAmmount: action.payload };
+      case 'SET_FAVORITES':
+        return { ...state, favorites: action.payload };
       default:
         throw new Error('Unknown action type');
     }
