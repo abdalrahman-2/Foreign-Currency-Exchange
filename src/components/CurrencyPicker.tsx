@@ -2,10 +2,8 @@ import styled from 'styled-components';
 import { type Currency } from '../utils/types';
 import CurrencyItem from './CurrencyItem';
 import { useState } from 'react';
-
-type props = {
-  allCurrencies: Currency[];
-};
+import useAllCurrencies from '../hooks/useAllCurrencies';
+import Loader from './Loader';
 
 const StyledCurrencyPicker = styled.div`
   margin-bottom: var(--spacing-125);
@@ -82,9 +80,20 @@ const StyledH3 = styled.h3`
   text-transform: uppercase;
 `;
 
-export default function CurrencyPicker({ allCurrencies }: props) {
+export default function CurrencyPicker() {
   const [resultsArr, srtResultsArr] = useState<Currency[]>([]);
   const [value, setValue] = useState<string>('');
+
+  const { isPending, data: allCurrencies, error } = useAllCurrencies();
+  if (isPending)
+    return (
+      <StyledCurrencyPicker>
+        <Loader />
+      </StyledCurrencyPicker>
+    );
+  if (!allCurrencies)
+    return <StyledCurrencyPicker>No data found</StyledCurrencyPicker>;
+  if (error) throw new Error(error.message);
 
   const popularCurrencies = [
     {

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { CurrencyPicker, Flag, Loader } from '.';
-import useAllCurrencies from '../hooks/useAllCurrencies';
-import { type Currency } from '../utils/types';
 import { useFormData } from '../contexts/FormDataContext';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import useCurrency from '../hooks/useCurrency';
 
 const StyledCurrencyButton = styled.button<{ $type: 'send' | 'receive' }>`
   display: flex;
@@ -41,8 +40,6 @@ export default function CurrencyButton() {
   const base = searchParams.get('base') || 'USD';
   const quote = searchParams.get('quote') || 'EGP';
 
-  const { isPending, data: allCurrencies, error } = useAllCurrencies();
-
   const { state, dispatch } = useFormData();
   const { $type, showPicker } = state;
 
@@ -60,6 +57,7 @@ export default function CurrencyButton() {
     };
   }, [dispatch]);
 
+  const { isPending, data: currency, error } = useCurrency(base);
   if (isPending) return <Loader />;
   if (error) console.log(error.message);
 
@@ -80,19 +78,11 @@ export default function CurrencyButton() {
         aria-label="currency picker"
         onClick={handleOnClick}
       >
-        <Flag
-          size="small"
-          currencyName={
-            allCurrencies.find(
-              (currency: Currency) =>
-                currency.iso_code === ($type === 'send' ? base : quote),
-            )?.name
-          }
-        />
+        <Flag size="small" currencyName={currency.name} />
         <p>{$type === 'send' ? base : quote}</p>
         <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
       </StyledCurrencyButton>
-      {showPicker && <CurrencyPicker allCurrencies={allCurrencies} />}
+      {showPicker && <CurrencyPicker />}
     </div>
   );
 }
