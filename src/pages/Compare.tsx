@@ -26,7 +26,7 @@ const StyledCompareHeader = styled.div`
   align-items: center;
 `;
 
-const StyledCompareList = styled.div`
+const StyledCompaireList = styled.div`
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -67,9 +67,9 @@ export default function Compare() {
     <StyledCompareContainer>
       <StyledCompareHeader>
         <span className="flex gap-[var(--spacing-150)]">
-          <p className="text-preset-4 text-[var(--neutral-200)] uppercase">
+          <h3 className="text-preset-4 text-[var(--neutral-200)] uppercase">
             multi-currency
-          </p>
+          </h3>
           <p className="text-preset-3-medium text-[var(--neutral-50)] uppercase">
             {sendAmmount} from {base}
           </p>
@@ -78,7 +78,7 @@ export default function Compare() {
           8 pairs
         </p>
       </StyledCompareHeader>
-      <StyledCompareList>
+      <StyledCompaireList>
         {shuffeled.map((item, idx) => {
           if (idx <= 7) {
             return (
@@ -92,7 +92,7 @@ export default function Compare() {
             );
           }
         })}
-      </StyledCompareList>
+      </StyledCompaireList>
     </StyledCompareContainer>
   );
 }

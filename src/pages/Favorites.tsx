@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Empty, FavoriteItem } from '../components';
 import { useAppData } from '../contexts/AppDataContext';
 
-const StyledFavoritesContaner = styled.div`
+const StyledFavoritesContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-250);
@@ -23,7 +23,7 @@ const StyledFavoritesHeader = styled.div`
   align-items: center;
 `;
 
-const StyledFavoritesList = styled.div`
+const StyledFavoriteList = styled.div`
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -44,20 +44,20 @@ export default function Favorites() {
   }
 
   return (
-    <StyledFavoritesContaner>
+    <StyledFavoritesContainer>
       <StyledFavoritesHeader>
-        <p className="text-preset-3-medium text-[var(--neutral-50)] uppercase">
+        <h3 className="text-preset-3-medium text-[var(--neutral-50)] uppercase">
           pinned pairs
-        </p>
+        </h3>
         <p className="text-preset-5 text-[var(--neutral-50)] uppercase">
           {Object.keys(favorites).length} favorites
         </p>
       </StyledFavoritesHeader>
-      <StyledFavoritesList>
+      <StyledFavoriteList>
         {Object.keys(favorites).map((key) => (
           <FavoriteItem key={key} pair={key} />
         ))}
-      </StyledFavoritesList>
-    </StyledFavoritesContaner>
+      </StyledFavoriteList>
+    </StyledFavoritesContainer>
   );
 }

@@ -17,3 +17,4 @@ export { default as CurrencyPicker } from './CurrencyPicker';
 export { default as CompareItem } from './CompareItem';
 export { default as Empty } from './Empty';
 export { default as FavoriteItem } from './FavoriteItem';
+export { default as LogItem } from './LogItem';

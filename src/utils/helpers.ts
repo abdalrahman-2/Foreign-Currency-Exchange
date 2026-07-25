@@ -10,7 +10,14 @@ export function rondomize<T>(arr: T[]): T[] {
   return shuffeledArr;
 }
 
-export function setFavorites(key: string, value: Record<string, unknown>) {
+export function formatRate(rate: number): string {
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: rate > 10000 ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(rate);
+}
+
+export function setItems(key: string, value: Record<string, unknown>) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
@@ -20,8 +27,8 @@ export function setFavorites(key: string, value: Record<string, unknown>) {
 
 export function getFavorites(key: string) {
   try {
-    const items = window.localStorage.getItem(key);
-    return items ? (JSON.parse(items) as Record<string, boolean>) : {};
+    const favorites = window.localStorage.getItem(key);
+    return favorites ? (JSON.parse(favorites) as Record<string, boolean>) : {};
   } catch (error) {
     console.log(error);
     return {};
@@ -52,5 +59,20 @@ export function handleFavoriteButtonOnClick(
     modifiedFavorites[`${base}/${quote}`] = true;
     console.log(modifiedFavorites);
     dispatcher({ type: 'SET_FAVORITES', payload: modifiedFavorites });
+  }
+}
+
+export function getLogs(key: string) {
+  try {
+    const logs = window.localStorage.getItem(key);
+    return logs
+      ? (JSON.parse(logs) as Record<
+          string,
+          { time: string; sendAmmount: number; receiveAmmount: number }
+        >)
+      : {};
+  } catch (error) {
+    console.log(error);
+    return {};
   }
 }

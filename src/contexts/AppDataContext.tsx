@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, type Dispatch } from 'react';
-import { getFavorites, setFavorites } from '../utils/helpers';
+import { getFavorites, setItems } from '../utils/helpers';
 
 // defining the type of the provider
 type props = {
@@ -43,7 +43,7 @@ export function AppDataProvider({ children }: props) {
       case 'SET_RECEIVE_AMMOUNT':
         return { ...state, receiveAmmount: action.payload };
       case 'SET_FAVORITES':
-        setFavorites('favoritePairs', action.payload);
+        setItems('favoritePairs', action.payload);
         return { ...state, favorites: action.payload };
       default:
         throw new Error('Unknown action type');
