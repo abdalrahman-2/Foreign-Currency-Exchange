@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useAppData } from '../contexts/AppDataContext';
 import { useSearchParams } from 'react-router-dom';
-import useTicker from '../hooks/useTicker';
+import useTicker from '../hooks/useRates';
 import { CompareItem, Loader, Empty } from '../components';
 import { rondomize } from '../utils/helpers';
 

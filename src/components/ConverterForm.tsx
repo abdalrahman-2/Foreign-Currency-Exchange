@@ -6,7 +6,7 @@ import FavoritButton from './FavoriteButton';
 import LogButton from './LogButton';
 import { useSearchParams } from 'react-router-dom';
 import { FormDataProvider } from '../contexts/FormDataContext';
-import useTicker from '../hooks/useTicker';
+import useRates from '../hooks/useRates';
 import Loader from './Loader';
 import { useAppData } from '../contexts/AppDataContext';
 import {
@@ -110,7 +110,7 @@ export default function ConverterForm() {
   const { appState, appDispatch } = useAppData();
   const { sendAmmount, receiveAmmount, favorites } = appState;
 
-  const { isPending, error, data } = useTicker(base);
+  const { isPending, error, data } = useRates(base);
   if (isPending)
     return (
       <StyledCurrencyTaker>

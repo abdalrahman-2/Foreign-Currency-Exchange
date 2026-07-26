@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useTicker from '../hooks/useTicker';
+import useRate from '../hooks/useRates';
 import Loader from './Loader';
 import { useSearchParams } from 'react-router-dom';
 
@@ -99,7 +99,7 @@ export default function Ticker() {
   // default base is USD
   const base = searchParams.get('base') || 'USD';
 
-  const { isPending, data, error } = useTicker(base);
+  const { isPending, data, error } = useRate(base);
 
   if (isPending)
     return (
