@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { ClearButton, LogItem } from '../components';
+import { ClearButton, Empty, LogItem } from '../components';
+import { useAppData } from '../contexts/AppDataContext';
 // import { Empty } from '../components';
 
 const StyledLogsContainer = styled.div`
@@ -37,11 +38,23 @@ const StyledLogList = styled.div`
 `;
 
 export default function Logs() {
+  const { appState, appDispatch } = useAppData();
+  const { logs } = appState;
+
+  function handleClearAllButton() {
+    appDispatch({ type: 'SET_LOGS', payload: {} });
+  }
+
+  if (Object.keys(logs).length === 0) {
+    return (
+      <Empty
+        heading="No conversions logged yet"
+        description="Every conversion is recorded here automatically when you tap LOG CONVERSION. Your log is private to this session and this browser."
+      />
+    );
+  }
+
   return (
-    // <Empty
-    //   heading="No conversions logged yet"
-    //   description="Every conversion is recorded here automatically when you tap LOG CONVERSION. Your log is private to this session and this browser."
-    // />
     <StyledLogsContainer>
       <StyledLogsHeader>
         <h3 className="uppercase text-preset-3-medium text-[var(--neutral-50)] ">
@@ -49,17 +62,21 @@ export default function Logs() {
         </h3>
         <span className="flex items-center gap-[var(--spacing-250)] max-[37.5em]:w-full max-[37.5em]:justify-between">
           <p className="uppercase text-preset-5 text-[var(--neutral-50)] pr-[var(--spacing-200)]">
-            X logged
+            {Object.keys(logs).length} logged
           </p>
-          <ClearButton />{' '}
+          <ClearButton onClick={handleClearAllButton} />
         </span>
       </StyledLogsHeader>
       <StyledLogList>
-        <LogItem />
-        <LogItem />
-        <LogItem />
-        <LogItem />
-        <LogItem />
+        {Object.keys(logs).map((key) => (
+          <LogItem
+            key={key}
+            date={Number(key)}
+            pair={logs[Number(key)].pair}
+            sendAmmount={logs[Number(key)].sendAmmount}
+            receiveAmmount={logs[Number(key)].receiveAmmount}
+          />
+        ))}
       </StyledLogList>
     </StyledLogsContainer>
   );

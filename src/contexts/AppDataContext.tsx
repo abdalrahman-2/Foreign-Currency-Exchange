@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer, type Dispatch } from 'react';
-import { getFavorites, setItems } from '../utils/helpers';
+import { getFavorites, getLogs, setItems } from '../utils/helpers';
 
 // defining the type of the provider
 type props = {
@@ -11,13 +11,24 @@ type State = {
   sendAmmount: string;
   receiveAmmount: string;
   favorites: Record<string, boolean>;
+  logs: Record<
+    number,
+    { pair: string; sendAmmount: string; receiveAmmount: string }
+  >;
 };
 
 // defining the type of the action
 type Action =
   | { type: 'SET_SEND_AMMOUNT'; payload: string }
   | { type: 'SET_RECEIVE_AMMOUNT'; payload: string }
-  | { type: 'SET_FAVORITES'; payload: Record<string, boolean> };
+  | { type: 'SET_FAVORITES'; payload: Record<string, boolean> }
+  | {
+      type: 'SET_LOGS';
+      payload: Record<
+        number,
+        { pair: string; sendAmmount: string; receiveAmmount: string }
+      >;
+    };
 
 // defining the type of the context
 type AppDataContextType = {
@@ -33,7 +44,8 @@ export function AppDataProvider({ children }: props) {
   const initialState: State = {
     sendAmmount: '',
     receiveAmmount: '',
-    favorites: getFavorites('favoritePairs'),
+    favorites: getFavorites(),
+    logs: getLogs(),
   };
 
   function appDataReducer(state: State, action: Action) {
@@ -45,6 +57,9 @@ export function AppDataProvider({ children }: props) {
       case 'SET_FAVORITES':
         setItems('favoritePairs', action.payload);
         return { ...state, favorites: action.payload };
+      case 'SET_LOGS':
+        setItems('logs', action.payload);
+        return { ...state, logs: action.payload };
       default:
         throw new Error('Unknown action type');
     }

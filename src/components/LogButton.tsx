@@ -1,11 +1,11 @@
-import type { ButtonHTMLAttributes } from 'react';
+import { useState, type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type props = {
-  state: 'empty' | 'filled' | 'logged';
+  $state: 'empty' | 'filled' | 'logged';
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const StyledButton = styled.button<{ $state: props['state'] }>`
+const StyledButton = styled.button<{ $state: props['$state'] }>`
   // common styles
   width: calc(132 / 16 * 1rem);
   height: calc(32 / 16 * 1rem);
@@ -51,15 +51,30 @@ const StyledButton = styled.button<{ $state: props['state'] }>`
   }
 `;
 
-export default function LogButton({ state, ...buttonProps }: props) {
+export default function LogButton({ $state, onClick, ...props }: props) {
+  const [showLogged, setShowLogged] = useState(false);
+
+  const currentState = showLogged ? 'logged' : $state;
+
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    onClick?.(e);
+
+    setShowLogged(true);
+
+    setTimeout(() => {
+      setShowLogged(false);
+    }, 2000);
+  }
+
   return (
     <StyledButton
-      $state={state}
+      $state={currentState}
+      onClick={handleClick}
       type="button"
       className="text-preset-5-medium"
-      {...buttonProps}
+      {...props}
     >
-      {state === 'logged' ? (
+      {currentState === 'logged' ? (
         <>
           <img
             src="../../assets/images/icon-check-black.png"

@@ -1,4 +1,9 @@
+import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+
+type props = {
+  onClick?: ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
+};
 
 const StyledButton = styled.button`
   background-color: var(--neutral-600);
@@ -36,9 +41,9 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function DeleteButton() {
+export default function DeleteButton({ onClick }: props) {
   return (
-    <StyledButton aria-label="delete">
+    <StyledButton aria-label="delete" onClick={onClick}>
       <img
         className="icon-default"
         src="../../assets/images/icon-delete.svg"

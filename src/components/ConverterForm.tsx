@@ -11,6 +11,7 @@ import Loader from './Loader';
 import { useAppData } from '../contexts/AppDataContext';
 import {
   checkIfPairFavorited,
+  getLogs,
   handleFavoriteButtonOnClick,
 } from '../utils/helpers';
 
@@ -107,7 +108,7 @@ export default function ConverterForm() {
   const quote = searchParams.get('quote') || 'EGP';
 
   const { appState, appDispatch } = useAppData();
-  const { sendAmmount, favorites } = appState;
+  const { sendAmmount, receiveAmmount, favorites } = appState;
 
   const { isPending, error, data } = useTicker(base);
   if (isPending)
@@ -119,6 +120,22 @@ export default function ConverterForm() {
   if (error) return <div>Error: {error.message}</div>;
   if (!data) return <p>No data found!</p>;
   const { today } = data;
+
+  function handleLogButtonOnClick(
+    base: string,
+    quote: string,
+    sendAmmount: string,
+    receiveAmmount: string,
+  ) {
+    const modifiedLogs = getLogs();
+    modifiedLogs[Date.now()] = {
+      pair: `${base}/${quote}`,
+      sendAmmount,
+      receiveAmmount,
+    };
+
+    appDispatch({ type: 'SET_LOGS', payload: modifiedLogs });
+  }
 
   return (
     <section className="flex flex-col gap-[12px]">
@@ -168,7 +185,13 @@ export default function ConverterForm() {
                     : 'filled'
               }
             />
-            <LogButton state={`${sendAmmount !== '' ? 'filled' : 'empty'}`} />
+            <LogButton
+              $state={`${sendAmmount !== '' ? 'filled' : 'empty'}`}
+              disabled={sendAmmount === ''}
+              onClick={() =>
+                handleLogButtonOnClick(base, quote, sendAmmount, receiveAmmount)
+              }
+            />
           </div>
         </StyledButtonsContainer>
       </StyledForm>

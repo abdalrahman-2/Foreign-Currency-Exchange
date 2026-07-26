@@ -17,6 +17,28 @@ export function formatRate(rate: number): string {
   }).format(rate);
 }
 
+export function getTimeAgo(timestamp: number): string {
+  const diff = Date.now() - timestamp;
+
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+
+  if (diff < hour) {
+    return `${Math.floor(diff / minute)}M`;
+  }
+
+  if (diff < day) {
+    return `${Math.floor(diff / hour)}H`;
+  }
+
+  const date = new Date(timestamp);
+
+  return `${date.getDate()} ${date.toLocaleString('en-US', {
+    month: 'short',
+  })}`;
+}
+
 export function setItems(key: string, value: Record<string, unknown>) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
@@ -25,9 +47,9 @@ export function setItems(key: string, value: Record<string, unknown>) {
   }
 }
 
-export function getFavorites(key: string) {
+export function getFavorites() {
   try {
-    const favorites = window.localStorage.getItem(key);
+    const favorites = window.localStorage.getItem('favoritePairs');
     return favorites ? (JSON.parse(favorites) as Record<string, boolean>) : {};
   } catch (error) {
     console.log(error);
@@ -37,7 +59,7 @@ export function getFavorites(key: string) {
 
 export function checkIfPairFavorited(base: string, quote: string): boolean {
   const tempPair = `${base}/${quote}`;
-  const favoritePairs = getFavorites('favoritePairs');
+  const favoritePairs = getFavorites();
   return tempPair in favoritePairs;
 }
 
@@ -50,25 +72,23 @@ export function handleFavoriteButtonOnClick(
     payload: Record<string, boolean>;
   }) => void,
 ) {
+  const modifiedFavorites = { ...favorites };
   if (checkIfPairFavorited(base, quote)) {
-    const modifiedFavorites = { ...favorites };
     delete modifiedFavorites[`${base}/${quote}`];
     dispatcher({ type: 'SET_FAVORITES', payload: modifiedFavorites });
   } else {
-    const modifiedFavorites = { ...favorites };
     modifiedFavorites[`${base}/${quote}`] = true;
-    console.log(modifiedFavorites);
     dispatcher({ type: 'SET_FAVORITES', payload: modifiedFavorites });
   }
 }
 
-export function getLogs(key: string) {
+export function getLogs() {
   try {
-    const logs = window.localStorage.getItem(key);
+    const logs = window.localStorage.getItem('logs');
     return logs
       ? (JSON.parse(logs) as Record<
-          string,
-          { time: string; sendAmmount: number; receiveAmmount: number }
+          number,
+          { pair: string; sendAmmount: string; receiveAmmount: string }
         >)
       : {};
   } catch (error) {

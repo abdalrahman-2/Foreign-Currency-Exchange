@@ -1,4 +1,9 @@
+import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+
+type props = {
+  onClick?: ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
+};
 
 const StyledButton = styled.button`
   width: calc(93 / 16 * 1rem);
@@ -24,6 +29,10 @@ const StyledButton = styled.button`
   }
 `;
 
-export default function ClearButton() {
-  return <StyledButton className="text-preset-5">Clear all</StyledButton>;
+export default function ClearButton({ onClick }: props) {
+  return (
+    <StyledButton className="text-preset-5" onClick={onClick}>
+      Clear all
+    </StyledButton>
+  );
 }
