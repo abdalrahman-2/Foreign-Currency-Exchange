@@ -1,5 +1,6 @@
 import { useState, type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 type props = {
   $state: 'empty' | 'filled' | 'logged';
@@ -77,7 +78,7 @@ export default function LogButton({ $state, onClick, ...props }: props) {
       {currentState === 'logged' ? (
         <>
           <img
-            src="../../assets/images/icon-check-black.png"
+            src={getImageAssetPath('icon-check-black.png')}
             className="w-[1rem] h-[1rem]"
           />
           <p className="ml-2">Logged</p>

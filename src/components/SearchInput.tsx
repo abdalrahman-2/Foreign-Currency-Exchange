@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledWrapper = styled.label`
   width: calc(360 / 16 * 1rem);
@@ -37,7 +38,10 @@ const StyledInput = styled.input`
 export default function SearchInput() {
   return (
     <StyledWrapper>
-      <img src="../../assets/images/icon-search.svg" alt="Search currencies" />
+      <img
+        src={getImageAssetPath('icon-search.svg')}
+        alt="Search currencies"
+      />
       <StyledInput
         type="text"
         className="text-preset-5"

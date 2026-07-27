@@ -4,6 +4,7 @@ import CurrencyItem from './CurrencyItem';
 import { useState } from 'react';
 import useAllCurrencies from '../hooks/useAllCurrencies';
 import Loader from './Loader';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledCurrencyPicker = styled.div`
   margin-bottom: var(--spacing-125);
@@ -142,7 +143,7 @@ export default function CurrencyPicker() {
       <StyledSearchBar htmlFor="search">
         <img
           className="w-[16px] h-[20px]"
-          src="../../assets/images/search.png"
+          src={getImageAssetPath('search.png')}
         />
         <StyledInput
           id="search"

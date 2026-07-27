@@ -1,5 +1,6 @@
 import { type ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 type props = {
   $state: 'empty' | 'filled' | 'favorited';
@@ -70,12 +71,12 @@ export default function FavoritButton({ $state, ...props }: props) {
     >
       {$state === 'empty' || $state === 'filled' ? (
         <img
-          src="../../assets/images/icon-star.svg"
+          src={getImageAssetPath('icon-star.svg')}
           alt="Add this currency pair to favorites"
         />
       ) : (
         <img
-          src="../../assets/images/icon-star-black.png"
+          src={getImageAssetPath('icon-star-black.png')}
           className="w-[1rem]"
           alt="This currency pair is in favorites"
         />

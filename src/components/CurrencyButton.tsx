@@ -4,6 +4,7 @@ import { useFormData } from '../contexts/FormDataContext';
 import { useSearchParams } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import useCurrency from '../hooks/useCurrency';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledCurrencyButton = styled.button<{ $type: 'send' | 'receive' }>`
   display: flex;
@@ -84,7 +85,7 @@ export default function CurrencyButton() {
       >
         <Flag size="small" currencyName={currency.name} />
         <p>{$type === 'send' ? base : quote}</p>
-        <img src="../../assets/images/icon-chevron-down.svg" alt={alt} />
+        <img src={getImageAssetPath('icon-chevron-down.svg')} alt={alt} />
       </StyledCurrencyButton>
       {showPicker && <CurrencyPicker />}
     </div>

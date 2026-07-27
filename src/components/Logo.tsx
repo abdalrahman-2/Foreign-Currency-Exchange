@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledImage = styled.img`
   width: calc(139 / 16 * 1rem);
@@ -12,7 +13,5 @@ const StyledImage = styled.img`
 `;
 
 export default function Logo() {
-  return (
-    <StyledImage src="../../assets/images/logo.svg" alt="FX Checker logo" />
-  );
+  return <StyledImage src={getImageAssetPath('logo.svg')} alt="FX Checker logo" />;
 }

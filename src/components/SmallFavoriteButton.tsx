@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 type props = {
   $state: 'notFavorited' | 'favorited';
@@ -47,12 +48,12 @@ export default function SmallFavoritButton({ $state, ...props }: props) {
     >
       {$state === 'notFavorited' ? (
         <img
-          src="../../assets/images/icon-star.svg"
+          src={getImageAssetPath('icon-star.svg')}
           alt="Add this currency pair to favorites"
         />
       ) : (
         <img
-          src="../../assets/images/icon-star-filled.svg"
+          src={getImageAssetPath('icon-star-filled.svg')}
           alt="This currency pair is in favorites"
         />
       )}

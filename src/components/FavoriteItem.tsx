@@ -3,7 +3,10 @@ import useSingleRate from '../hooks/useSingleRate';
 import Loader from './Loader';
 import SmallFavoritButton from './SmallFavoriteButton';
 import { useAppData } from '../contexts/AppDataContext';
-import { handleFavoriteButtonOnClick } from '../utils/helpers';
+import {
+  getImageAssetPath,
+  handleFavoriteButtonOnClick,
+} from '../utils/helpers';
 
 type props = {
   pair: string;
@@ -48,7 +51,7 @@ export default function FavoriteItem({ pair }: props) {
         {base}
         <img
           className="w-[10px]"
-          src="../../assets/images/icon-arrow-right.svg"
+          src={getImageAssetPath('icon-arrow-right.svg')}
           alt="right arrow"
         />
         {quote}
@@ -60,7 +63,7 @@ export default function FavoriteItem({ pair }: props) {
         <span className="text-preset-6 flex items-center gap-2 justify-end text-[var(--neutral-50)]">
           <img
             className="w-[8px] h-[8px] "
-            src={`../../assets/images/${percentage >= 0 ? 'up' : 'down'}.png`}
+            src={getImageAssetPath(percentage >= 0 ? 'up.png' : 'down.png')}
           />
           <p
             className={`${percentage >= 0 ? 'text-[var(--green-500)]' : 'text-[var(--red-500)]'}`}

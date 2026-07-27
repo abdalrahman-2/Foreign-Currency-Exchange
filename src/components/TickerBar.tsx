@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useRate from '../hooks/useRates';
 import Loader from './Loader';
 import { useSearchParams } from 'react-router-dom';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledDiv = styled.div`
   display: flex;
@@ -124,7 +125,7 @@ export default function Ticker() {
   return (
     <StyledDiv>
       <StyledHeading>
-        <img src="../../assets/images/record-button.png" />
+        <img src={getImageAssetPath('record-button.png')} alt="" />
         <span className="text-preset-5-medium">Live Markets</span>
       </StyledHeading>
 
@@ -141,7 +142,11 @@ export default function Ticker() {
             <p className="text-preset-5 flex items-center gap-[5px]">
               <img
                 className="w-[8px] h-[8px] "
-                src={`../../assets/images/${Number(rate.percentage.split('%')[0]) >= 0 ? 'up' : 'down'}.png`}
+                src={getImageAssetPath(
+                  Number(rate.percentage.split('%')[0]) >= 0
+                    ? 'up.png'
+                    : 'down.png',
+                )}
               />
               <span>
                 {Number(rate.percentage.split('%')[0]) >= 0 ? '+' : ''}

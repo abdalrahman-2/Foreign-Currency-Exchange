@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { formatRate, getLogs, getTimeAgo } from '../utils/helpers';
+import {
+  formatRate,
+  getImageAssetPath,
+  getLogs,
+  getTimeAgo,
+} from '../utils/helpers';
 import DeleteButton from './DeleteButton';
 import { useAppData } from '../contexts/AppDataContext';
 
@@ -51,7 +56,7 @@ export default function LogItem({
           {base}
           <img
             className="w-[10px]"
-            src="../../assets/images/icon-arrow-right.svg"
+            src={getImageAssetPath('icon-arrow-right.svg')}
             alt="right arrow"
           />
           {quote}

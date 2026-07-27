@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { getFlagAssetPath } from '../utils/helpers';
 
 type props = {
   currencyName: string;
@@ -15,7 +16,7 @@ export default function Flag({ currencyName, size }: props) {
   return (
     <StyledFlag
       size={size}
-      src={`../../assets/images/flags/${currencyName}.svg`}
+      src={getFlagAssetPath(currencyName)}
       alt={`${currencyName} countrie's flag`}
     />
   );

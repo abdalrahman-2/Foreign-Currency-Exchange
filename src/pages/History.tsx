@@ -5,6 +5,7 @@ import { useAppData } from '../contexts/AppDataContext';
 import { Empty, Loader } from '../components';
 import { useState } from 'react';
 import useSingleRateHistory from '../hooks/useSingleRateHistory';
+import { getImageAssetPath } from '../utils/helpers';
 
 type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | '5Y';
 
@@ -220,7 +221,9 @@ export default function History() {
               className={`text-preset-2 text-[var(${changePercentage >= 0 ? '--green-500' : '--red-500'})] flex items-center gap-[var(--spacing-050)]`}
             >
               <img
-                src={`../../assets/images/${changePercentage >= 0 ? 'up' : 'down'}.png`}
+                src={getImageAssetPath(
+                  changePercentage >= 0 ? 'up.png' : 'down.png',
+                )}
                 className="w-[14px] h-[14px]"
               />
               {`${changePercentage > 0 ? '+' : ''}${changePercentage.toFixed(2)}%`}

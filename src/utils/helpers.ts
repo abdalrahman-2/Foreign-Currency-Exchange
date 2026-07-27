@@ -10,6 +10,17 @@ export function rondomize<T>(arr: T[]): T[] {
   return shuffeledArr;
 }
 
+export function getImageAssetPath(fileName: string) {
+  return new URL(`../../assets/images/${fileName}`, import.meta.url).href;
+}
+
+export function getFlagAssetPath(currencyName: string) {
+  return new URL(
+    `../../assets/images/flags/${currencyName}.svg`,
+    import.meta.url,
+  ).href;
+}
+
 export function formatRate(rate: number): string {
   return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: rate > 10000 ? 0 : 2,

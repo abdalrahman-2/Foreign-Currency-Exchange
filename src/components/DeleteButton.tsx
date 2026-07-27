@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 type props = {
   onClick?: ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
@@ -46,12 +47,12 @@ export default function DeleteButton({ onClick }: props) {
     <StyledButton aria-label="delete" onClick={onClick}>
       <img
         className="icon-default"
-        src="../../assets/images/icon-delete.svg"
+        src={getImageAssetPath('icon-delete.svg')}
         alt="Delete this item"
       />
       <img
         className="icon-hover"
-        src="../../assets/images/icon-delete-filled.svg"
+        src={getImageAssetPath('icon-delete-filled.svg')}
         alt="Delete this item"
       />
     </StyledButton>

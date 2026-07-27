@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { getImageAssetPath } from '../utils/helpers';
 
 const StyledButton = styled.button`
   background-color: var(--neutral-600);
@@ -56,12 +57,12 @@ export default function SwapButton() {
     <StyledButton type="button" onClick={handleSwapButton}>
       <img
         className="big-screen"
-        src="../../assets/images/icon-exchange.svg"
+        src={getImageAssetPath('icon-exchange.svg')}
         alt="Swap the send and receive currencies"
       />
       <img
         className="small-screen"
-        src="../../assets/images/icon-exchange-vertical.svg"
+        src={getImageAssetPath('icon-exchange-vertical.svg')}
         alt="Swap the send and receive currencies"
       />
     </StyledButton>
