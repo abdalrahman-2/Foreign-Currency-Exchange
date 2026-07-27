@@ -21,16 +21,27 @@ Users should be able to:
 ### Screenshot
 
 ![Alt text](./assets/images/1.png)
+Caption: Main converter view with live exchange results.
+
 ![Alt text](./assets/images/2.png)
+Caption: Currency picker with searchable options.
+
 ![Alt text](./assets/images/3.png)
+Caption: Rate history section with chart and range filters.
+
 ![Alt text](./assets/images/4.png)
+Caption: Compare view showing multiple currency conversions.
+
 ![Alt text](./assets/images/5.png)
+Caption: Favorites view for pinned currency pairs.
+
 ![Alt text](./assets/images/6.png)
+Caption: Logs view with saved conversion history.
 
 ### Links
 
-- Solution URL: Add your Frontend Mentor solution link here
-- Live Site URL: Add your deployed site link here
+- Solution URL: [https://www.frontendmentor.io/solutions/foreign-exchange-checker-E3U2SglQZu]
+- Live Site URL: [https://foreign-currency-exchange-57mr.vercel.app]
 
 ## Features
 
@@ -111,4 +122,4 @@ AI was used as a coding assistant during development to help with refactoring, d
 
 ## Author
 
-- Frontend Mentor: [https://www.frontendmentor.io/profile/AbdalrahmanEsmatAdd your profile link here]
+- Frontend Mentor: [https://www.frontendmentor.io/profile/AbdalrahmanEsmatAdd]

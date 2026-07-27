@@ -3,7 +3,7 @@ import { useAppData } from '../contexts/AppDataContext';
 import { useSearchParams } from 'react-router-dom';
 import useTicker from '../hooks/useRates';
 import { CompareItem, Loader, Empty } from '../components';
-import { rondomize } from '../utils/helpers';
+import { randomizer } from '../utils/helpers';
 
 const StyledCompareContainer = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ export default function Compare() {
   }
 
   const { today } = data;
-  const shuffeled = rondomize(today);
+  const shuffeled = randomizer(today);
 
   return (
     <StyledCompareContainer>

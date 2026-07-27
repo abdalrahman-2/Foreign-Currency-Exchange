@@ -1,13 +1,13 @@
-export function rondomize<T>(arr: T[]): T[] {
-  const shuffeledArr = [...arr];
+export function randomizer<T>(arr: T[]): T[] {
+  const shuffledArr = [...arr];
 
-  for (let i = shuffeledArr.length - 1; i > 0; i--) {
+  for (let i = shuffledArr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
 
-    [shuffeledArr[i], shuffeledArr[j]] = [shuffeledArr[j], shuffeledArr[i]];
+    [shuffledArr[i], shuffledArr[j]] = [shuffledArr[j], shuffledArr[i]];
   }
 
-  return shuffeledArr;
+  return shuffledArr;
 }
 
 export function getImageAssetPath(fileName: string) {
@@ -28,8 +28,9 @@ const flagAssetMap = Object.fromEntries(
 
 export function getFlagAssetPath(currencyName: string) {
   const normalizedName = currencyName.toLowerCase();
+  const fallbackFlag = flagAssetMap.xx ?? '';
 
-  return flagAssetMap[normalizedName] ?? flagAssetMap.xx;
+  return flagAssetMap[normalizedName] ?? fallbackFlag;
 }
 
 export function formatRate(rate: number): string {

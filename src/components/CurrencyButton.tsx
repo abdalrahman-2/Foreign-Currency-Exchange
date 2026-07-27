@@ -64,7 +64,7 @@ export default function CurrencyButton() {
     error,
   } = useCurrency($type === 'send' ? base : quote);
   if (isPending) return <Loader />;
-  if (error) console.log(error.message);
+  if (error) throw new Error(error.message);
 
   function handleOnClick() {
     dispatch({ type: 'SET_SHOWPICKER', payload: !state.showPicker });

@@ -177,7 +177,6 @@ export default function History() {
     );
   }
 
-  console.log(data);
   const open = data[data.length - 1].rate;
   const last = data[0].rate;
   const change = last - open;
