@@ -18,7 +18,7 @@ const StyledMain = styled.main`
     gap: var(--spacing-500);
   }
 
-  @media (max-width: 23.4375em) {
+  @media (max-width: 25em) {
     padding: var(--spacing-400) var(--spacing-200);
   }
 `;

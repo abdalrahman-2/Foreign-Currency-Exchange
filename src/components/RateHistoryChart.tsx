@@ -1,14 +1,53 @@
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis } from 'recharts';
 
-export function RateHistoryChart() {
-  const data = [
-    { name: 'A', rate: 1 },
-    { name: 'B', rate: 0.7 },
-    { name: 'C', rate: 0.1 },
-    { name: 'D', rate: 0.85 },
-    { name: 'E', rate: 0.4 },
-    { name: 'F', rate: 0.7 },
-  ];
+type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | '5Y';
+
+type props = {
+  data: {
+    date: string;
+    base: string;
+    quote: string;
+    rate: number;
+  }[];
+  selectedRange: TimeRange;
+};
+
+export function RateHistoryChart({ data, selectedRange }: props) {
+  function formatXAxis(date: string) {
+    const d = new Date(date);
+
+    switch (selectedRange) {
+      case '1D':
+        return d.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+
+      case '1W':
+        return d.toLocaleDateString('en-US', {
+          weekday: 'short',
+        });
+
+      case '1M':
+        return d.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        });
+
+      case '3M':
+      case '1Y':
+        return d.toLocaleDateString('en-US', {
+          month: 'short',
+        });
+
+      case '5Y':
+        return d.getFullYear().toString();
+
+      default:
+        return date;
+    }
+  }
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <AreaChart data={data}>
@@ -18,7 +57,14 @@ export function RateHistoryChart() {
             <stop offset="100%" stopColor="#D3FC47" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+        <XAxis
+          dataKey="date"
+          axisLine={false}
+          tickLine={false}
+          interval="preserveStartEnd"
+          minTickGap={90}
+          tickFormatter={formatXAxis}
+        />
         <YAxis axisLine={false} tickLine={false} />
         <Area
           type="monotone"
