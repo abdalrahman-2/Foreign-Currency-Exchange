@@ -52,7 +52,7 @@ const StyledStatCard = styled.div`
   border: 1px solid var(--neutral-600);
 
   @media (max-width: 41.25em) {
-    width: calc(158 / 16 * 1rem);
+    width: calc(166.5 / 16 * 1rem);
   }
 `;
 

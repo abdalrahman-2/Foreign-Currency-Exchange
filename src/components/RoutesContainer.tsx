@@ -2,6 +2,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import Tab from './Tab';
 import styled from 'styled-components';
 import MobileTabs from './MobileTabs';
+import { useAppData } from '../contexts/AppDataContext';
 
 const StyeledDiv = styled.div`
   display: flex;
@@ -23,6 +24,8 @@ const StyledUl = styled.ul`
 
 export default function RoutesContainer() {
   const { pathname, search } = useLocation();
+  const { appState } = useAppData();
+  const { favorites, logs } = appState;
 
   return (
     <StyeledDiv>
@@ -50,7 +53,14 @@ export default function RoutesContainer() {
               to={`/favorites${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"
             >
-              favorites
+              favorites{' '}
+              {Object.keys(favorites).length > 0 ? (
+                <p className="ml-[var(--spacing-050)] flex items-center justify-center text-[var(--lime-500)] rounded-full bg-[var(--lime-800)] w-[1.25rem] h-[1.25rem]  text-preset-6">
+                  {Object.keys(favorites).length}
+                </p>
+              ) : (
+                ''
+              )}
             </NavLink>
           </Tab>
           <Tab $state={pathname === '/logs' ? 'chosen' : 'default'}>
@@ -58,7 +68,14 @@ export default function RoutesContainer() {
               to={`/logs${search}`}
               className="h-full flex items-center px-[var(--spacing-150)] uppercase text-preset-3 text-[var(--neutral-50)] focus:outline-1 focus:outline-solid focus:outline-[var(--lime-500)] focus:outline-offset-[3px]"
             >
-              logs
+              logs{' '}
+              {Object.keys(logs).length > 0 ? (
+                <p className="ml-[var(--spacing-050)] flex items-center justify-center text-[var(--lime-500)] rounded-full bg-[var(--lime-800)] w-[1.25rem] h-[1.25rem]  text-preset-6">
+                  {Object.keys(logs).length}
+                </p>
+              ) : (
+                ''
+              )}
             </NavLink>
           </Tab>
         </StyledUl>

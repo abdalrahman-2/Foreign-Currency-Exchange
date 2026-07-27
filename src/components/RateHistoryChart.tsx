@@ -62,7 +62,7 @@ export function RateHistoryChart({ data, selectedRange }: props) {
           axisLine={false}
           tickLine={false}
           interval="preserveStartEnd"
-          minTickGap={90}
+          minTickGap={60}
           tickFormatter={formatXAxis}
         />
         <YAxis axisLine={false} tickLine={false} />

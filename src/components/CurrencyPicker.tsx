@@ -17,6 +17,7 @@ const StyledCurrencyPicker = styled.div`
   position: absolute;
   top: 50px;
   right: 0;
+  z-index: 2;
 
   /* hide scrollbar Firefox */
   scrollbar-width: none;
@@ -32,7 +33,6 @@ const StyledCurrencyPicker = styled.div`
   @media (max-width: 23.4375em) {
     top: 65px;
     right: -21px;
-    z-index: 2;
   }
 `;
 
