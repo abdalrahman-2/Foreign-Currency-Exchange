@@ -50,12 +50,12 @@ const StyledCurrencyTaker = styled.div`
   }
 
   // 970 px
-  @media (max-width: 66.875em) {
+  @media (max-width: 60.625em) {
     width: calc(350 / 16 * 1rem);
   }
 
   // 870 px
-  @media (max-width: 66.875em) {
+  @media (max-width: 54.375em) {
     width: calc(320 / 16 * 1rem);
   }
 
