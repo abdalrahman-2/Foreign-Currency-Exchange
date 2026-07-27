@@ -3,7 +3,7 @@ import getLiveMarkets from '../api/apiRates';
 
 export default function useRates(base: string) {
   const { isPending, data, error } = useQuery({
-    queryKey: ['ticker', base],
+    queryKey: ['rates', base],
     queryFn: () => getLiveMarkets(base),
   });
 
