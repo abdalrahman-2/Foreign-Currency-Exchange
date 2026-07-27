@@ -14,11 +14,22 @@ export function getImageAssetPath(fileName: string) {
   return new URL(`../../assets/images/${fileName}`, import.meta.url).href;
 }
 
+const flagAssetModules = import.meta.glob('../../assets/images/flags/*.svg', {
+  eager: true,
+  import: 'default',
+}) as Record<string, string>;
+
+const flagAssetMap = Object.fromEntries(
+  Object.entries(flagAssetModules).map(([path, assetUrl]) => {
+    const fileName = path.split('/').pop()?.replace('.svg', '') ?? '';
+    return [fileName.toLowerCase(), assetUrl];
+  }),
+);
+
 export function getFlagAssetPath(currencyName: string) {
-  return new URL(
-    `../../assets/images/flags/${currencyName}.svg`,
-    import.meta.url,
-  ).href;
+  const normalizedName = currencyName.toLowerCase();
+
+  return flagAssetMap[normalizedName] ?? flagAssetMap.xx;
 }
 
 export function formatRate(rate: number): string {
